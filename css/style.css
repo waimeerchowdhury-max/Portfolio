@@ -61,7 +61,7 @@ button { font: inherit; background: none; border: 0; cursor: pointer; color: inh
   pointer-events: none; z-index: 60;
   opacity: .055;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 7s steps(8) infinite;
+  /* static grain: an animated full-screen layer was recomposited every frame */
 }
 @keyframes grain {
   0%,100% { transform: translate(0,0); } 12% { transform: translate(-2%,3%); }
@@ -107,6 +107,10 @@ body.cursor-view .cursor-dot { opacity: 0; }
   animation: introOpen 1s var(--ease-io) 3.6s both;
 }
 html:not(.js) .preloader, .preloader.skip { display: none; }
+/* While the intro plays, keep the page underneath unpainted so the lens animation is never starved.
+   CSS-only fallback reveals the page at 4.6s even if JavaScript never adds .ready. */
+html.js body:not(.ready) > :not(.preloader) { visibility: hidden; animation: introReveal 0s linear 4.6s forwards; }
+@keyframes introReveal { to { visibility: visible; } }
 .preloader.open { animation: introOpen 1s var(--ease-io) both; }
 .intro-center { position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
 .intro-lens { width: 180px; height: 180px; color: var(--e-400); overflow: visible; }
@@ -255,7 +259,7 @@ body.menu-open .mobile-menu { clip-path: circle(150% at calc(100% - 44px) 40px);
   background:
     linear-gradient(to top, rgba(1,23,15,.92) 0%, rgba(1,23,15,.35) 42%, rgba(1,23,15,.28) 100%),
     radial-gradient(120% 90% at 80% 10%, rgba(4,120,87,.42), transparent 60%);
-  mix-blend-mode: multiply;
+  /* normal blending: multiply forced a per-frame blend over the moving photo, which stalled slower GPUs */
 }
 .hero-veil::after {
   content: ''; position: absolute; inset: 0;
