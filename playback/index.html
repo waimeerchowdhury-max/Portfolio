@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emerald Hour — Logo &amp; Intro Playback (preview)</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face { font-family: "Fraunces"; src: url(../assets/fonts/fraunces-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Space Grotesk"; src: url(../assets/fonts/space-grotesk-latin-wght-normal.woff2) format("woff2"); font-weight: 300 700; font-display: swap; }
+:root {
+  --e-950:#01170f; --e-900:#012b1e; --e-800:#064e3b; --e-700:#047857; --e-600:#059669;
+  --e-500:#10b981; --e-400:#34d399; --e-300:#6ee7b7; --paper:#fff; --paper-2:#f2f7f4;
+  --ink:#0a1f17; --ink-soft:#40604f; --line:rgba(4,120,87,.18);
+  --display:"Fraunces", Georgia, serif; --body:"Space Grotesk", system-ui, sans-serif;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--body); background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; }
+button { font: inherit; cursor: pointer; }
+
+/* ---------- playback banner ---------- */
+.banner { background: var(--e-950); color: var(--e-300); font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+  padding: 14px 4vw; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.banner b { color: #fff; font-weight: 600; }
+.pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill { background: transparent; color: var(--e-300); border: 1px solid rgba(110,231,183,.35); border-radius: 999px; padding: 9px 16px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; transition: all .3s var(--ease); }
+.pill:hover { border-color: var(--e-400); color: #fff; }
+.pill.on { background: var(--e-500); border-color: var(--e-500); color: var(--e-950); font-weight: 700; }
+
+/* ---------- intro stage ---------- */
+.stage { position: relative; height: min(88vh, 820px); min-height: 560px; overflow: hidden; color: #fff;
+  background: radial-gradient(70% 70% at 50% 40%, #064e3b 0%, #01170f 72%); }
+.stage::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .08; z-index: 9;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+.shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;
+  clip-path: circle(0% at 50% 50%); transition: clip-path 1.5s var(--ease); }
+.veil { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(1,23,15,.55), rgba(1,23,15,.25) 40%, rgba(1,23,15,.92));
+  opacity: 0; transition: opacity 1.2s ease; }
+.flash { position: absolute; inset: 0; z-index: 8; background: #fff; opacity: 0; pointer-events: none; }
+.hud { position: absolute; z-index: 5; font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--e-300);
+  opacity: 0; transition: opacity .6s; }
+.hud-tl { top: 28px; left: 4vw; display: flex; flex-direction: column; gap: 6px; }
+.hud-tr { top: 28px; right: 4vw; text-align: right; display: flex; flex-direction: column; gap: 6px; }
+.fstop { font-family: var(--display); font-size: 40px; letter-spacing: 0; text-transform: none; color: #fff; font-weight: 400; font-variant-numeric: tabular-nums; }
+.center { position: absolute; left: 50%; top: 50%; z-index: 6; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+.lockup { display: flex; flex-direction: column; align-items: center; gap: 22px; transition: all 1s var(--ease); }
+.mark { width: 200px; height: 200px; color: var(--e-400); overflow: visible; transition: width 1s var(--ease), height 1s var(--ease); }
+.mark .core { fill: #fff; }
+.mark .d { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.wm { font-family: var(--display); font-size: clamp(40px, 6vw, 84px); line-height: 1; letter-spacing: -.01em; white-space: nowrap; }
+.wm .w { display: inline-block; }
+.wm .w2 { font-style: italic; color: var(--e-400); }
+.wm .ch { display: inline-block; opacity: 0; transform: translateY(60%); }
+.tagline { font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--e-300); opacity: 0; }
+.enter { display: inline-block; margin-top: 6px; padding: 14px 26px; border-radius: 999px; background: var(--e-500); color: var(--e-950);
+  font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; text-decoration: none; opacity: 0; pointer-events: none; }
+.bar { position: absolute; z-index: 7; left: 4vw; right: 4vw; bottom: 26px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.bar button { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: 9px 18px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; transition: all .3s var(--ease); }
+.bar button:hover { background: #fff; color: var(--e-950); }
+
+/* phases */
+.stage.s1 .hud { opacity: 1; }
+.stage.s1 .mark .d { animation: draw 1.3s var(--ease) forwards; }
+.stage.s1 .mark .f { animation: fade .9s var(--ease) 1s both; }
+.stage.s3 .shot { clip-path: circle(150% at 50% 50%); }
+.stage.s3 .veil { opacity: 1; }
+.stage.s3 .hud-tl, .stage.s3 .hud-tr { opacity: 1; }
+.stage.s2 .flash { animation: flash .9s ease forwards; }
+.stage.s4 .lockup { flex-direction: row; gap: 26px; text-align: left; }
+.stage.s4 .mark { width: 96px; height: 96px; }
+.stage.s4 .wm .ch { animation: rise .9s var(--ease) forwards; animation-delay: calc(var(--i) * 45ms); }
+.stage.s4 .tagline { animation: fadeIn 1s ease .9s forwards; }
+.stage.s4 .center { transform: translate(-50%, -50%); }
+.stage.s4 .enter { animation: fadeIn .9s ease 1.6s forwards; pointer-events: auto; }
+.stage.s4 .lockup .tagline { text-align: left; }
+.stage.s4 .center { align-items: flex-start; }
+.stage.s4 .lockup-text { display: flex; flex-direction: column; gap: 10px; }
+.stage.s4 .center { align-items: flex-start; }
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fade { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes flash { 0% { opacity: 0; } 35% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ---------- concepts ---------- */
+.section { padding: 90px 4vw; }
+.kicker { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; font-weight: 700; color: var(--e-600); margin-bottom: 16px; }
+.title { font-family: var(--display); font-weight: 600; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -.02em; }
+.title em { font-style: italic; font-weight: 400; color: var(--e-600); }
+.note { margin-top: 14px; color: var(--ink-soft); max-width: 640px; line-height: 1.6; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 46px; }
+@media (max-width: 960px) { .cards { grid-template-columns: 1fr; } }
+.card { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; display: flex; flex-direction: column;
+  transition: transform .6s var(--ease), box-shadow .6s; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(1,43,30,.12); }
+.card-art { height: 230px; display: grid; place-items: center; }
+.card-art.light { background: var(--paper-2); color: var(--e-700); }
+.card-art.dark { background: var(--e-950); color: var(--e-400); }
+.card-art.dark .mark { color: var(--e-400); }
+.card-art .mark { width: 150px; height: 150px; }
+.card-art .mark.mini { width: 110px; height: 110px; }
+.card-art .mark .core { fill: var(--core, #fff); }
+.card-art.light .mark { --core: var(--paper-2); }
+.card-art.dark .mark { --core: var(--e-950); }
+.card-art.light .mark .core { fill: var(--paper-2); }
+.card-art.dark .mark .core { fill: var(--e-950); }
+.card-art .mark .d, .card-art .mark .f { stroke-dasharray: none; stroke-dashoffset: 0; }
+.card-txt { padding: 22px 24px 26px; }
+.tag-l { font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--e-600); font-weight: 700; }
+.card h3 { font-family: var(--display); font-weight: 500; font-size: 28px; margin: 8px 0 10px; }
+.card p { color: var(--ink-soft); font-size: 14.5px; line-height: 1.6; }
+.pick-btn { margin-top: 18px; background: var(--e-700); color: #fff; border: none; border-radius: 999px; padding: 11px 20px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; transition: background .3s, transform .3s var(--ease); }
+.pick-btn:hover { background: var(--e-600); transform: translateY(-2px); }
+.footnote { margin-top: 40px; color: var(--ink-soft); font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <span><b>Playback preview</b> · the live site is unchanged</span>
+  <div class="pills" role="group" aria-label="Choose logo concept">
+    <button class="pill on" data-c="A">Concept A · Facet Iris</button>
+    <button class="pill" data-c="B">Concept B · Arch Sunset</button>
+    <button class="pill" data-c="C">Concept C · Aperture Leaf</button>
+  </div>
+</div>
+
+<section class="stage" id="stage" aria-label="Intro preview">
+  <img class="shot" src="../assets/img/full/concept-rooftop-01.jpg" alt="">
+  <div class="veil"></div>
+  <div class="flash"></div>
+  <div class="hud hud-tl"><span>Emerald Hour · Intro</span><b class="fstop" id="fstop">f/22</b></div>
+  <div class="hud hud-tr"><span>ISO 100</span><span>1/250 s</span></div>
+  <div class="center">
+    <div class="lockup">
+      <div id="marks"><svg class="mark" data-c="A" viewBox="0 0 120 120" aria-hidden="true"><polygon class="d" pathLength="1" points="34.00,14.00 86.00,14.00 108.00,36.00 108.00,84.00 86.00,106.00 34.00,106.00 12.00,84.00 12.00,36.00" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+<polygon class="f" points="60.00,45.00 72.99,52.50 72.99,67.50 60.00,75.00 47.01,67.50 47.01,52.50" style="fill:var(--e-500)" opacity=".92"/>
+<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line class="d" pathLength="1" x1="60.00" y1="45.00" x2="85.71" y2="29.36"/><line class="d" pathLength="1" x1="72.99" y1="52.50" x2="99.39" y2="66.95"/><line class="d" pathLength="1" x1="72.99" y1="67.50" x2="73.68" y2="97.59"/><line class="d" pathLength="1" x1="60.00" y1="75.00" x2="34.29" y2="90.64"/><line class="d" pathLength="1" x1="47.01" y1="67.50" x2="20.61" y2="53.05"/><line class="d" pathLength="1" x1="47.01" y1="52.50" x2="46.32" y2="22.41"/></g>
+<circle class="f core" cx="60" cy="60" r="3.6"/></svg><svg class="mark" data-c="B" viewBox="0 0 120 120" aria-hidden="true"><path class="d" pathLength="1" d="M22 110 V60 A38 38 0 0 1 98 60 V110 Z" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round"/>
+<path class="f" d="M40 84 A20 20 0 0 1 80 84 Z" style="fill:var(--e-400)"/>
+<path class="d" pathLength="1" d="M30 93 H90" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+<path class="d" pathLength="1" d="M38 102 H82" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></svg><svg class="mark" data-c="C" viewBox="0 0 120 120" aria-hidden="true"><path class="f" d="M60.00,52.00 Q77.00,33.00 60.00,10.00 Q43.00,33.00 60.00,52.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M66.93,56.00 Q91.88,61.22 103.30,35.00 Q74.88,31.78 66.93,56.00 Z" fill="currentColor" opacity=".55"/><path class="f" d="M66.93,64.00 Q74.88,88.22 103.30,85.00 Q91.88,58.78 66.93,64.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M60.00,68.00 Q43.00,87.00 60.00,110.00 Q77.00,87.00 60.00,68.00 Z" fill="currentColor" opacity=".55"/><path class="f" d="M53.07,64.00 Q28.12,58.78 16.70,85.00 Q45.12,88.22 53.07,64.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M53.07,56.00 Q45.12,31.78 16.70,35.00 Q28.12,61.22 53.07,56.00 Z" fill="currentColor" opacity=".55"/>
+<circle class="f core" cx="60" cy="60" r="7" style="fill:var(--core,#fff)"/></svg></div>
+      <div class="lockup-text">
+        <h1 class="wm" aria-label="Emerald Hour"><span class="w w1" id="wm1">Emerald</span> <span class="w w2" id="wm2">Hour</span></h1>
+        <p class="tagline">New York City — Personal Shoots &amp; Events</p>
+      </div>
+    </div>
+    <a class="enter" href="#" onclick="return false">Enter the site →</a>
+  </div>
+  <div class="bar">
+    <span>Intro · ~4 seconds · concept <b id="cur">A</b></span>
+    <button id="replay">Replay intro</button>
+  </div>
+</section>
+
+<section class="section" id="concepts">
+  <p class="kicker">Logo options</p>
+  <h2 class="title">Three creative <em>marks</em></h2>
+  <p class="note">Each mark is built from one idea: the emerald gem, the camera, and the golden hour. Pick one and the intro uses it.</p>
+  <div class="cards">
+  <article class="card">
+    <div class="card-art light"><svg class="mark" data-c="A" viewBox="0 0 120 120" aria-hidden="true"><polygon class="d" pathLength="1" points="34.00,14.00 86.00,14.00 108.00,36.00 108.00,84.00 86.00,106.00 34.00,106.00 12.00,84.00 12.00,36.00" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+<polygon class="f" points="60.00,45.00 72.99,52.50 72.99,67.50 60.00,75.00 47.01,67.50 47.01,52.50" style="fill:var(--e-500)" opacity=".92"/>
+<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line class="d" pathLength="1" x1="60.00" y1="45.00" x2="85.71" y2="29.36"/><line class="d" pathLength="1" x1="72.99" y1="52.50" x2="99.39" y2="66.95"/><line class="d" pathLength="1" x1="72.99" y1="67.50" x2="73.68" y2="97.59"/><line class="d" pathLength="1" x1="60.00" y1="75.00" x2="34.29" y2="90.64"/><line class="d" pathLength="1" x1="47.01" y1="67.50" x2="20.61" y2="53.05"/><line class="d" pathLength="1" x1="47.01" y1="52.50" x2="46.32" y2="22.41"/></g>
+<circle class="f core" cx="60" cy="60" r="3.6"/></svg></div>
+    <div class="card-art dark"><svg class="mark mini" data-c="A" viewBox="0 0 120 120" aria-hidden="true"><polygon class="d" pathLength="1" points="34.00,14.00 86.00,14.00 108.00,36.00 108.00,84.00 86.00,106.00 34.00,106.00 12.00,84.00 12.00,36.00" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+<polygon class="f" points="60.00,45.00 72.99,52.50 72.99,67.50 60.00,75.00 47.01,67.50 47.01,52.50" style="fill:var(--e-500)" opacity=".92"/>
+<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line class="d" pathLength="1" x1="60.00" y1="45.00" x2="85.71" y2="29.36"/><line class="d" pathLength="1" x1="72.99" y1="52.50" x2="99.39" y2="66.95"/><line class="d" pathLength="1" x1="72.99" y1="67.50" x2="73.68" y2="97.59"/><line class="d" pathLength="1" x1="60.00" y1="75.00" x2="34.29" y2="90.64"/><line class="d" pathLength="1" x1="47.01" y1="67.50" x2="20.61" y2="53.05"/><line class="d" pathLength="1" x1="47.01" y1="52.50" x2="46.32" y2="22.41"/></g>
+<circle class="f core" cx="60" cy="60" r="3.6"/></svg></div>
+    <div class="card-txt"><span class="tag-l">Concept A</span><h3>Facet Iris</h3><p>An emerald-cut gem whose facets form a camera aperture. Gem for the emerald, shutter for the photography.</p>
+      <button class="pick-btn" data-pick="A">Preview in intro</button></div>
+  </article>
+  <article class="card">
+    <div class="card-art light"><svg class="mark" data-c="B" viewBox="0 0 120 120" aria-hidden="true"><path class="d" pathLength="1" d="M22 110 V60 A38 38 0 0 1 98 60 V110 Z" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round"/>
+<path class="f" d="M40 84 A20 20 0 0 1 80 84 Z" style="fill:var(--e-400)"/>
+<path class="d" pathLength="1" d="M30 93 H90" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+<path class="d" pathLength="1" d="M38 102 H82" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></svg></div>
+    <div class="card-art dark"><svg class="mark mini" data-c="B" viewBox="0 0 120 120" aria-hidden="true"><path class="d" pathLength="1" d="M22 110 V60 A38 38 0 0 1 98 60 V110 Z" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round"/>
+<path class="f" d="M40 84 A20 20 0 0 1 80 84 Z" style="fill:var(--e-400)"/>
+<path class="d" pathLength="1" d="M30 93 H90" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+<path class="d" pathLength="1" d="M38 102 H82" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></svg></div>
+    <div class="card-txt"><span class="tag-l">Concept B</span><h3>Arch Sunset</h3><p>A window arch framing a half-set sun over the horizon: the golden hour, held in a frame.</p>
+      <button class="pick-btn" data-pick="B">Preview in intro</button></div>
+  </article>
+  <article class="card">
+    <div class="card-art light"><svg class="mark" data-c="C" viewBox="0 0 120 120" aria-hidden="true"><path class="f" d="M60.00,52.00 Q77.00,33.00 60.00,10.00 Q43.00,33.00 60.00,52.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M66.93,56.00 Q91.88,61.22 103.30,35.00 Q74.88,31.78 66.93,56.00 Z" fill="currentColor" opacity=".55"/><path class="f" d="M66.93,64.00 Q74.88,88.22 103.30,85.00 Q91.88,58.78 66.93,64.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M60.00,68.00 Q43.00,87.00 60.00,110.00 Q77.00,87.00 60.00,68.00 Z" fill="currentColor" opacity=".55"/><path class="f" d="M53.07,64.00 Q28.12,58.78 16.70,85.00 Q45.12,88.22 53.07,64.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M53.07,56.00 Q45.12,31.78 16.70,35.00 Q28.12,61.22 53.07,56.00 Z" fill="currentColor" opacity=".55"/>
+<circle class="f core" cx="60" cy="60" r="7" style="fill:var(--core,#fff)"/></svg></div>
+    <div class="card-art dark"><svg class="mark mini" data-c="C" viewBox="0 0 120 120" aria-hidden="true"><path class="f" d="M60.00,52.00 Q77.00,33.00 60.00,10.00 Q43.00,33.00 60.00,52.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M66.93,56.00 Q91.88,61.22 103.30,35.00 Q74.88,31.78 66.93,56.00 Z" fill="currentColor" opacity=".55"/><path class="f" d="M66.93,64.00 Q74.88,88.22 103.30,85.00 Q91.88,58.78 66.93,64.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M60.00,68.00 Q43.00,87.00 60.00,110.00 Q77.00,87.00 60.00,68.00 Z" fill="currentColor" opacity=".55"/><path class="f" d="M53.07,64.00 Q28.12,58.78 16.70,85.00 Q45.12,88.22 53.07,64.00 Z" fill="currentColor" opacity=".95"/><path class="f" d="M53.07,56.00 Q45.12,31.78 16.70,35.00 Q28.12,61.22 53.07,56.00 Z" fill="currentColor" opacity=".55"/>
+<circle class="f core" cx="60" cy="60" r="7" style="fill:var(--core,#fff)"/></svg></div>
+    <div class="card-txt"><span class="tag-l">Concept C</span><h3>Aperture Leaf</h3><p>Six leaves opening into an iris. Organic and emerald, with a light core that reads as the lens.</p>
+      <button class="pick-btn" data-pick="C">Preview in intro</button></div>
+  </article>
+  </div>
+  <p class="footnote">This page is a preview only. Nothing on the live site has changed yet. When you choose a concept and say “apply”, I will update the logo, the intro, and the nav.</p>
+</section>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const fstop = document.getElementById('fstop');
+  const cur = document.getElementById('cur');
+  const shot = stage.querySelector('.shot');
+  const timers = [];
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // split wordmark letters
+  ['wm1', 'wm2'].forEach(id => {
+    const el = document.getElementById(id);
+    const txt = el.textContent;
+    el.textContent = '';
+    [...txt].forEach((c, i) => {
+      const s = document.createElement('span');
+      s.className = 'ch'; s.textContent = c; s.style.setProperty('--i', i + (id === 'wm2' ? 7 : 0));
+      el.appendChild(s);
+    });
+  });
+
+  let active = 'A';
+  const setConcept = c => {
+    active = c; cur.textContent = c;
+    document.querySelectorAll('#marks .mark').forEach(m => m.style.display = m.dataset.c === c ? '' : 'none');
+    document.querySelectorAll('.pill').forEach(p => p.classList.toggle('on', p.dataset.c === c));
+  };
+
+  const stops = ['f/22', 'f/16', 'f/11', 'f/8', 'f/5.6', 'f/4', 'f/2.8', 'f/1.4'];
+  function play() {
+    timers.splice(0).forEach(clearTimeout);
+    stage.className = 'stage';
+    shot.style.transition = '';
+    void stage.offsetWidth;
+    if (reduce) { stage.className = 'stage s4'; fstop.textContent = 'f/1.4'; return; }
+    stage.classList.add('s1');
+    stops.forEach((s, i) => later(() => fstop.textContent = s, 300 + i * 200));
+    later(() => stage.classList.add('s2'), 2050);      // flash
+    later(() => stage.classList.add('s3'), 2250);      // photo through the aperture
+    later(() => stage.classList.add('s4'), 3500);      // lockup settles
+  }
+
+  document.getElementById('replay').addEventListener('click', () => { stage.className = 'stage'; fstop.textContent = 'f/22'; setTimeout(play, 60); });
+  document.querySelectorAll('.pill').forEach(p => p.addEventListener('click', () => { setConcept(p.dataset.c); stage.className = 'stage'; fstop.textContent = 'f/22'; setTimeout(play, 60); }));
+  document.querySelectorAll('.pick-btn').forEach(b => b.addEventListener('click', () => {
+    setConcept(b.dataset.pick); stage.className = 'stage'; fstop.textContent = 'f/22';
+    setTimeout(play, 60); document.getElementById('stage').scrollIntoView({ behavior: 'smooth' });
+  }));
+
+  setConcept('A');
+  play();
+})();
+</script>
+</body>
+</html>
