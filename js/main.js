@@ -7,22 +7,43 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
-  /* ---------- preloader ---------- */
+  /* ---------- intro: aperture sequence ---------- */
   const pre = $('.preloader');
-  const preCount = $('.pre-count');
-  let n = 0;
-  const tick = setInterval(() => {
-    n = Math.min(100, n + Math.ceil(Math.random() * 9));
-    preCount.textContent = String(n).padStart(3, '0');
-    if (n >= 100) {
-      clearInterval(tick);
-      setTimeout(() => {
-        pre.classList.add('done');
-        document.body.classList.add('ready');
-        setTimeout(() => pre.remove(), 1100);
-      }, 350);
-    }
-  }, reduce ? 8 : 55);
+  const introTimers = [];
+  let introDone = false;
+  const finishIntro = () => {
+    if (introDone) return;
+    introDone = true;
+    introTimers.splice(0).forEach(clearTimeout);
+    pre.classList.add('done');
+    document.body.classList.add('ready');
+    setTimeout(() => pre.remove(), 1100);
+  };
+  const at = (fn, ms) => introTimers.push(setTimeout(fn, ms));
+  $$('[data-letters]').forEach(el => {
+    const txt = el.textContent;
+    el.textContent = '';
+    [...txt].forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.className = 'ch'; s.textContent = ch;
+      s.style.setProperty('--i', i + (el.classList.contains('iw2') ? 7 : 0));
+      el.appendChild(s);
+    });
+  });
+  $('.intro-skip').addEventListener('click', finishIntro);
+  $('.intro-enter').addEventListener('click', finishIntro);
+  if (reduce) {
+    finishIntro();
+  } else {
+    const fstop = $('#intro-fstop');
+    const stops = ['f/22', 'f/16', 'f/11', 'f/8', 'f/5.6', 'f/4', 'f/2.8', 'f/1.4'];
+    pre.classList.add('s1');
+    stops.forEach((s, i) => at(() => fstop.textContent = s, 300 + i * 200));
+    at(() => pre.classList.add('s2'), 1950);   // flash
+    at(() => pre.classList.add('s3'), 2100);   // photo opens through the aperture
+    at(() => pre.classList.add('s4'), 2900);   // wordmark settles
+    at(finishIntro, 5600);
+  }
 
   /* ---------- custom cursor ---------- */
   const dot = $('.cursor-dot'), ring = $('.cursor-ring');
