@@ -37,5 +37,5 @@ python3 -m http.server 8080
 
 ## Notes
 
-- Instagram link (`@waimeerchowdhury`) appears in the nav and footer — swap the handle in `index.html` if needed.
+- Instagram link (`@waimeerchowdhury`) appears in the footer; the top-right nav button is "Contacts" and jumps to the footer. Swap the handle in `index.html` if needed.
 - Originals at the repo root are untouched masters; the site only loads the optimized copies under `assets/img/`.
