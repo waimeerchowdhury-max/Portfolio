@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#012b1e">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
@@ -49,12 +50,15 @@
     </svg>
     <span class="brand-name">Emerald <em>Hour</em></span>
   </a>
-  <nav class="nav-links" aria-label="Primary">
-    <a href="#work" data-link="work">Work</a>
-    <a href="#series" data-link="series">Series</a>
-    <a href="#about" data-link="about">About</a>
-    <a class="nav-cta" href="#contact">Contacts</a>
-  </nav>
+  <div class="nav-right">
+    <nav class="nav-links" aria-label="Primary">
+      <span class="nav-pill" aria-hidden="true"></span>
+      <a href="#work" data-link="work"><span class="n">01</span><span data-roll>Work</span></a>
+      <a href="#series" data-link="series"><span class="n">02</span><span data-roll>Series</span></a>
+      <a href="#about" data-link="about"><span class="n">03</span><span data-roll>About</span></a>
+    </nav>
+    <a class="nav-cta" href="#contact" data-magnetic><span class="dot" aria-hidden="true"></span><span data-roll>Contacts</span><i aria-hidden="true">↗</i></a>
+  </div>
   <button class="menu-btn" aria-label="Menu"><span></span><span></span></button>
 </header>
 
@@ -63,7 +67,7 @@
     <a href="#work"><span>01</span>Work</a>
     <a href="#series"><span>02</span>Series</a>
     <a href="#about"><span>03</span>About</a>
-    <a href="#contact"><span>04</span>Contact</a>
+    <a href="#contact"><span>04</span>Contacts</a>
   </nav>
 </div>
 
@@ -103,7 +107,7 @@
     <div class="sec-head">
       <div class="reveal">
         <p class="sec-kicker">Portfolio</p>
-        <h2 class="sec-title">Selected <em>Work</em></h2>
+        <h2 class="sec-title" data-split>Selected <em>Work</em></h2>
       </div>
       <div class="filters reveal" style="--d:.12s" role="group" aria-label="Filter gallery">
         <button class="filter active" data-filter="all">All <span class="n">14</span></button>
@@ -116,72 +120,72 @@
 
     <div class="masonry">
       <figure class="tile" data-cat="street" data-cursor="view">
-        <img src="assets/img/thumb/street-flash-01.jpg" data-full="assets/img/full/street-flash-01.jpg" alt="Man in knit vest and sunglasses against a red brick wall, direct flash" loading="lazy">
+        <img src="assets/img/thumb/street-flash-01.jpg" data-full="assets/img/full/street-flash-01.jpg" alt="Man in knit vest and sunglasses against a red brick wall, direct flash" decoding="async">
         <span class="tile-idx">01</span>
         <figcaption class="tile-cap"><h3>Brick &amp; Flash</h3><p>Street editorial · NYC</p></figcaption>
       </figure>
       <figure class="tile" data-cat="studio" data-cursor="view">
-        <img src="assets/img/thumb/studio-gaze-02.jpg" data-full="assets/img/full/studio-gaze-02.jpg" alt="Studio portrait in striped shirt and glasses looking sideways on warm backdrop" loading="lazy">
+        <img src="assets/img/thumb/studio-gaze-02.jpg" data-full="assets/img/full/studio-gaze-02.jpg" alt="Studio portrait in striped shirt and glasses looking sideways on warm backdrop" decoding="async">
         <span class="tile-idx">02</span>
         <figcaption class="tile-cap"><h3>Side-Eye in Stripes</h3><p>Studio session · warm seamless</p></figcaption>
       </figure>
       <figure class="tile" data-cat="concept" data-cursor="view">
-        <img src="assets/img/thumb/concept-rooftop-01.jpg" data-full="assets/img/full/concept-rooftop-01.jpg" alt="Figure in spider shirt leaning on a brick arch with the Manhattan skyline at sunset" loading="lazy">
+        <img src="assets/img/thumb/concept-rooftop-01.jpg" data-full="assets/img/full/concept-rooftop-01.jpg" alt="Figure in spider shirt leaning on a brick arch with the Manhattan skyline at sunset" decoding="async">
         <span class="tile-idx">03</span>
         <figcaption class="tile-cap"><h3>Web-Slinger at Golden Hour</h3><p>Concept series · rooftop</p></figcaption>
       </figure>
       <figure class="tile" data-cat="outdoor" data-cursor="view">
-        <img src="assets/img/thumb/outdoor-portico-01.jpg" data-full="assets/img/full/outdoor-portico-01.jpg" alt="Figure sitting on the steps of a white portico against a deep red wall" loading="lazy">
+        <img src="assets/img/thumb/outdoor-portico-01.jpg" data-full="assets/img/full/outdoor-portico-01.jpg" alt="Figure sitting on the steps of a white portico against a deep red wall" decoding="async">
         <span class="tile-idx">04</span>
         <figcaption class="tile-cap"><h3>The Portico</h3><p>Outdoors · heritage walls</p></figcaption>
       </figure>
       <figure class="tile" data-cat="studio" data-cursor="view">
-        <img src="assets/img/thumb/studio-play-01.jpg" data-full="assets/img/full/studio-play-01.jpg" alt="Playful studio frame, finger tapping the nose, striped shirt and red tie" loading="lazy">
+        <img src="assets/img/thumb/studio-play-01.jpg" data-full="assets/img/full/studio-play-01.jpg" alt="Playful studio frame, finger tapping the nose, striped shirt and red tie" decoding="async">
         <span class="tile-idx">05</span>
         <figcaption class="tile-cap"><h3>Nose Tap</h3><p>Studio session · warm seamless</p></figcaption>
       </figure>
       <figure class="tile" data-cat="street" data-cursor="view">
-        <img src="assets/img/thumb/street-flash-02.jpg" data-full="assets/img/full/street-flash-02.jpg" alt="Man adjusting sunglasses under hard flash against dark brick" loading="lazy">
+        <img src="assets/img/thumb/street-flash-02.jpg" data-full="assets/img/full/street-flash-02.jpg" alt="Man adjusting sunglasses under hard flash against dark brick" decoding="async">
         <span class="tile-idx">06</span>
         <figcaption class="tile-cap"><h3>Low Sun, Wired In</h3><p>Street editorial · NYC</p></figcaption>
       </figure>
       <figure class="tile" data-cat="outdoor" data-cursor="view">
-        <img src="assets/img/thumb/outdoor-stop-02.jpg" data-full="assets/img/full/outdoor-stop-02.jpg" alt="Figure beneath a stop sign at a waterfront park under a dusk sky" loading="lazy">
+        <img src="assets/img/thumb/outdoor-stop-02.jpg" data-full="assets/img/full/outdoor-stop-02.jpg" alt="Figure beneath a stop sign at a waterfront park under a dusk sky" decoding="async">
         <span class="tile-idx">07</span>
         <figcaption class="tile-cap"><h3>Stop &amp; Stare</h3><p>Outdoors · waterfront dusk</p></figcaption>
       </figure>
       <figure class="tile" data-cat="studio" data-cursor="view">
-        <img src="assets/img/thumb/studio-rest-03.jpg" data-full="assets/img/full/studio-rest-03.jpg" alt="Subject resting head on arms over a wooden chair, red tie draped" loading="lazy">
+        <img src="assets/img/thumb/studio-rest-03.jpg" data-full="assets/img/full/studio-rest-03.jpg" alt="Subject resting head on arms over a wooden chair, red tie draped" decoding="async">
         <span class="tile-idx">08</span>
         <figcaption class="tile-cap"><h3>Heavy Head</h3><p>Studio session · warm seamless</p></figcaption>
       </figure>
       <figure class="tile" data-cat="concept" data-cursor="view">
-        <img src="assets/img/thumb/concept-steps-02.jpg" data-full="assets/img/full/concept-steps-02.jpg" alt="Night frame on stone steps, spider shirt and a bag mid-swing" loading="lazy">
+        <img src="assets/img/thumb/concept-steps-02.jpg" data-full="assets/img/full/concept-steps-02.jpg" alt="Night frame on stone steps, spider shirt and a bag mid-swing" decoding="async">
         <span class="tile-idx">09</span>
         <figcaption class="tile-cap"><h3>Friendly Neighborhood</h3><p>Concept series · night</p></figcaption>
       </figure>
       <figure class="tile" data-cat="outdoor" data-cursor="view">
-        <img src="assets/img/thumb/outdoor-pavilion-04.jpg" data-full="assets/img/full/outdoor-pavilion-04.jpg" alt="Leather jacket over knit vest by a park pavilion railing" loading="lazy">
+        <img src="assets/img/thumb/outdoor-pavilion-04.jpg" data-full="assets/img/full/outdoor-pavilion-04.jpg" alt="Leather jacket over knit vest by a park pavilion railing" decoding="async">
         <span class="tile-idx">10</span>
         <figcaption class="tile-cap"><h3>Leather &amp; Pines</h3><p>Outdoors · park pavilion</p></figcaption>
       </figure>
       <figure class="tile" data-cat="studio" data-cursor="view">
-        <img src="assets/img/thumb/studio-mask-04.jpg" data-full="assets/img/full/studio-mask-04.jpg" alt="Subject asleep on a chair with a red mask perched on their head" loading="lazy">
+        <img src="assets/img/thumb/studio-mask-04.jpg" data-full="assets/img/full/studio-mask-04.jpg" alt="Subject asleep on a chair with a red mask perched on their head" decoding="async">
         <span class="tile-idx">11</span>
         <figcaption class="tile-cap"><h3>Off-Duty Hero</h3><p>Studio session · warm seamless</p></figcaption>
       </figure>
       <figure class="tile" data-cat="street" data-cursor="view">
-        <img src="assets/img/thumb/night-flash-03.jpg" data-full="assets/img/full/night-flash-03.jpg" alt="Night flash frame in a parking lot, maroon leather jacket" loading="lazy">
+        <img src="assets/img/thumb/night-flash-03.jpg" data-full="assets/img/full/night-flash-03.jpg" alt="Night flash frame in a parking lot, maroon leather jacket" decoding="async">
         <span class="tile-idx">12</span>
         <figcaption class="tile-cap"><h3>Parking Lot, 11PM</h3><p>Flash editorial · NYC</p></figcaption>
       </figure>
       <figure class="tile" data-cat="outdoor" data-cursor="view">
-        <img src="assets/img/thumb/outdoor-pavilion-03.jpg" data-full="assets/img/full/outdoor-pavilion-03.jpg" alt="Figure in black tee adjusting a belt by a wooden fence and pavilion" loading="lazy">
+        <img src="assets/img/thumb/outdoor-pavilion-03.jpg" data-full="assets/img/full/outdoor-pavilion-03.jpg" alt="Figure in black tee adjusting a belt by a wooden fence and pavilion" decoding="async">
         <span class="tile-idx">13</span>
         <figcaption class="tile-cap"><h3>Pavilion Quiet</h3><p>Outdoors · park pavilion</p></figcaption>
       </figure>
       <figure class="tile" data-cat="studio" data-cursor="view">
-        <img src="assets/img/thumb/studio-stool-05.jpg" data-full="assets/img/full/studio-stool-05.jpg" alt="Full-length studio portrait seated on a stool holding a red mask" loading="lazy">
+        <img src="assets/img/thumb/studio-stool-05.jpg" data-full="assets/img/full/studio-stool-05.jpg" alt="Full-length studio portrait seated on a stool holding a red mask" decoding="async">
         <span class="tile-idx">14</span>
         <figcaption class="tile-cap"><h3>The Stool</h3><p>Studio session · warm seamless</p></figcaption>
       </figure>
@@ -193,14 +197,14 @@
     <div class="sec-head">
       <div class="reveal">
         <p class="sec-kicker">Chapters</p>
-        <h2 class="sec-title">The <em>Series</em></h2>
+        <h2 class="sec-title" data-split>The <em>Series</em></h2>
       </div>
       <p class="rail-hint reveal" style="--d:.12s"><i></i>Drag to explore</p>
     </div>
     <div class="rail">
       <article class="series-card">
         <span class="num">01</span>
-        <div class="ph"><img src="assets/img/full/street-flash-01.jpg" alt="Flash Nights series cover" loading="lazy"></div>
+        <div class="ph"><img src="assets/img/full/street-flash-01.jpg" alt="Flash Nights series cover" decoding="async"></div>
         <div class="body">
           <h3>Flash Nights</h3>
           <p>Direct flash, brick walls and midnight errands — the city caught off-guard, and loving it.</p>
@@ -209,7 +213,7 @@
       </article>
       <article class="series-card">
         <span class="num">02</span>
-        <div class="ph"><img src="assets/img/full/studio-rest-03.jpg" alt="Warm Studio series cover" loading="lazy"></div>
+        <div class="ph"><img src="assets/img/full/studio-rest-03.jpg" alt="Warm Studio series cover" decoding="async"></div>
         <div class="body">
           <h3>Warm Studio</h3>
           <p>One seamless backdrop, one striped shirt, zero serious faces. Studio days that became inside jokes.</p>
@@ -218,7 +222,7 @@
       </article>
       <article class="series-card">
         <span class="num">03</span>
-        <div class="ph"><img src="assets/img/full/concept-rooftop-01.jpg" alt="Web-Slinger series cover" loading="lazy"></div>
+        <div class="ph"><img src="assets/img/full/concept-rooftop-01.jpg" alt="Web-Slinger series cover" decoding="async"></div>
         <div class="body">
           <h3>Web-Slinger</h3>
           <p>A rooftop, a mask and a golden-hour skyline — a concept series about the hero off-duty.</p>
@@ -227,7 +231,7 @@
       </article>
       <article class="series-card">
         <span class="num">04</span>
-        <div class="ph"><img src="assets/img/full/outdoor-portico-01.jpg" alt="City Wanderings series cover" loading="lazy"></div>
+        <div class="ph"><img src="assets/img/full/outdoor-portico-01.jpg" alt="City Wanderings series cover" decoding="async"></div>
         <div class="body">
           <h3>City Wanderings</h3>
           <p>Porticos, park pavilions and waterfront dusk — slow walks that turn into portraits.</p>
@@ -256,11 +260,11 @@
       </div>
       <div class="about-copy">
         <p class="sec-kicker reveal">About</p>
-        <h2 class="reveal" style="--d:.08s">The eye behind <em>Emerald Hour</em>.</h2>
+        <h2 data-split>The eye behind <em>Emerald Hour</em>.</h2>
         <p class="reveal" style="--d:.16s">It started with friends and a camera at events. It never really stopped.</p>
         <p class="reveal" style="--d:.24s">Portraits, parties, editorial and concept work across New York City. Relaxed, cinematic, a little bold, and always close.</p>
         <p class="about-sig reveal" style="--d:.3s">— Waimeer Chowdhury, NYC</p>
-        <div class="about-list reveal" style="--d:.36s">
+        <div class="about-list reveal" style="--d:.36s" data-stagger>
           <span>Studio</span><span>Street &amp; Flash</span><span>Concept</span><span>Outdoors</span><span>Events</span>
         </div>
       </div>
@@ -272,13 +276,19 @@
 <!-- footer -->
 <footer class="footer dark" id="contact">
   <div class="footer-inner">
-    <h2 class="reveal">Frames outlive <em>moments</em>.</h2>
+    <h2 data-split>Frames outlive <em>moments</em>.</h2>
     <div class="footer-right">
       <p class="reveal" style="--d:.1s">Emerald Hour is the working portfolio of Waimeer Chowdhury — personal shoots and events, photographed in and around New York City.</p>
-      <a class="ig-btn reveal" style="--d:.18s" data-magnetic href="https://instagram.com/waimeerchowdhury" target="_blank" rel="noopener">
+      <div class="ig-row reveal" style="--d:.18s">
+      <a class="ig-btn" data-magnetic href="https://instagram.com/waimeerchowdhury" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
         @waimeerchowdhury
       </a>
+        <a class="spin-badge" href="https://instagram.com/waimeerchowdhury" target="_blank" rel="noopener" aria-label="Follow on Instagram">
+          <svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="ig-circ" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><text><textPath href="#ig-circ">FOLLOW · INSTAGRAM · FOLLOW · INSTAGRAM ·</textPath></text></svg>
+          <b aria-hidden="true">↗</b>
+        </a>
+      </div>
     </div>
   </div>
   <div class="footer-marquee" aria-hidden="true">
