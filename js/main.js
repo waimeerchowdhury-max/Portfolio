@@ -32,17 +32,21 @@
   });
   $('.intro-skip').addEventListener('click', finishIntro);
   $('.intro-enter').addEventListener('click', finishIntro);
-  if (reduce) {
+  // Play the full intro once per tab; reloads go straight to the site.
+  let seen = false;
+  try { seen = sessionStorage.getItem('eh-intro-seen') === '1'; sessionStorage.setItem('eh-intro-seen', '1'); } catch (e) {}
+  if (reduce || seen) {
+    pre.classList.add('skip');
     finishIntro();
   } else {
     const fstop = $('#intro-fstop');
     const stops = ['f/22', 'f/16', 'f/11', 'f/8', 'f/5.6', 'f/4', 'f/2.8', 'f/1.4'];
     pre.classList.add('s1');
-    stops.forEach((s, i) => at(() => fstop.textContent = s, 300 + i * 200));
-    at(() => pre.classList.add('s2'), 1950);   // flash
-    at(() => pre.classList.add('s3'), 2100);   // photo opens through the aperture
-    at(() => pre.classList.add('s4'), 2900);   // wordmark settles
-    at(finishIntro, 5600);
+    stops.forEach((s, i) => at(() => fstop.textContent = s, 250 + i * 170));
+    at(() => pre.classList.add('s2'), 1550);   // flash
+    at(() => pre.classList.add('s3'), 1700);   // photo opens through the aperture
+    at(() => pre.classList.add('s4'), 2400);   // wordmark settles
+    at(finishIntro, 3800);
   }
 
   /* ---------- custom cursor ---------- */
