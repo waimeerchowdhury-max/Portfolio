@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Emerald Hour — logo and intro options</title>
+<style>
+@font-face { font-family: "Fraunces"; src: url("../assets/fonts/fraunces-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Space Grotesk"; src: url("../assets/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+:root { --deep: #012b1e; --e900: #043527; --e700: #047857; --e600: #059669; --e500: #10b981; --e400: #34d399; --e300: #6ee7b7; --ink: #f2fbf7; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #01170f; color: var(--ink); font-family: "Space Grotesk", system-ui, sans-serif; }
+header { padding: 56px 6vw 24px; }
+header p.k { letter-spacing: .3em; text-transform: uppercase; font-size: 12px; color: var(--e300); margin: 0 0 14px; }
+header h1 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: clamp(36px, 5vw, 64px); margin: 0 0 12px; line-height: 1; }
+header h1 em { color: var(--e400); font-weight: 400; }
+header p.lead { color: rgba(242,251,247,.72); max-width: 640px; line-height: 1.6; margin: 0; }
+main { display: grid; gap: 28px; padding: 24px 6vw 80px; }
+.opt { background: linear-gradient(160deg, #053b29 0%, #01170f 75%); border: 1px solid rgba(110,231,183,.18); border-radius: 22px; overflow: hidden; }
+.opt-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 26px; border-bottom: 1px solid rgba(110,231,183,.14); flex-wrap: wrap; }
+.opt-head h2 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 28px; margin: 0; }
+.opt-head h2 span { color: var(--e400); font-style: italic; font-weight: 400; margin-right: 10px; }
+.opt-head p { margin: 4px 0 0; color: rgba(242,251,247,.66); font-size: 14px; max-width: 520px; line-height: 1.5; }
+button.replay { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: 10px 18px; font: inherit; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: background .3s, color .3s; }
+button.replay:hover { background: #fff; color: var(--deep); }
+.body { display: grid; grid-template-columns: 260px 1fr; gap: 0; }
+@media (max-width: 860px) { .body { grid-template-columns: 1fr; } }
+.logo-col { display: grid; place-items: center; padding: 34px 22px; border-right: 1px solid rgba(110,231,183,.12); background: rgba(1,23,15,.4); }
+.logo-col svg { width: 170px; height: 170px; overflow: visible; }
+.logo-col small { display: block; margin-top: 14px; text-align: center; color: rgba(242,251,247,.6); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+.stage { position: relative; min-height: 340px; display: grid; place-items: center; overflow: hidden; background: radial-gradient(70% 70% at 50% 40%, #064e3b 0%, #01170f 72%); }
+.stage .c { position: relative; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.stage .wm { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: clamp(34px, 4.6vw, 62px); letter-spacing: -.01em; white-space: nowrap; line-height: 1; }
+.stage .wm em { color: var(--e400); font-weight: 400; }
+.stage .wm .ch { display: inline-block; }
+.stage .tag { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--e300); }
+.stage .flash { position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, #fff, rgba(255,255,255,0) 60%); opacity: 0; pointer-events: none; }
+
+/* ---------- A: developing frame ---------- */
+.a .stage .frame { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.a .stage .sun { transform: translateY(70px); }
+.a .stage .ch { opacity: 0; filter: blur(14px); }
+.a.run .stage .frame { animation: aFrame 1.1s cubic-bezier(.2,.8,.2,1) .1s forwards; }
+.a.run .stage .sun { animation: aSun 1.3s cubic-bezier(.2,.8,.2,1) .7s forwards; }
+.a.run .ch { animation: aDevelop 1.2s ease-out forwards; animation-delay: calc(1.2s + var(--i) * 70ms); }
+@keyframes aFrame { from { opacity: 0; transform: scale(1.25) rotate(-3deg); } to { opacity: 1; transform: none; } }
+@keyframes aSun { to { transform: none; } }
+@keyframes aDevelop { to { opacity: 1; filter: blur(0); } }
+
+/* ---------- B: shutter bloom ---------- */
+.b .blades { transform-box: view-box; transform-origin: 60px 60px; transform: rotate(-70deg) scale(.6); opacity: 0; }
+.b .core { transform-box: fill-box; transform-origin: center; transform: scale(0); }
+.b .stage .wm { overflow: hidden; padding-bottom: .08em; }
+.b .stage .ch { display: inline-block; transform: translateY(105%); }
+.b.run .blades { animation: bBlades 1.3s cubic-bezier(.3,1.4,.4,1) .15s forwards; }
+.b.run .core { animation: bCore .7s cubic-bezier(.3,1.6,.5,1) 1.1s forwards; }
+.b.run .flash { animation: bFlash 1s ease-out 1.25s; }
+.b.run .ch { animation: bUp .9s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(1.5s + var(--i) * 55ms); }
+@keyframes bBlades { to { opacity: 1; transform: rotate(0) scale(1); } }
+@keyframes bCore { to { transform: scale(1); } }
+@keyframes bFlash { 0% { opacity: 0; } 25% { opacity: .9; } 100% { opacity: 0; } }
+@keyframes bUp { to { transform: none; } }
+
+/* ---------- C: sunset arcs ---------- */
+.c-opt .arc { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.c-opt .horizon { transform-box: fill-box; transform-origin: left center; transform: scaleX(0); }
+.c-opt .sunDot { transform-box: fill-box; transform-origin: center; transform: scale(0); }
+.c-opt .stage .wm { clip-path: inset(0 100% 0 0); }
+.c-opt.run .arc.a1 { animation: cArc 1s ease-out .2s forwards; }
+.c-opt.run .arc.a2 { animation: cArc 1s ease-out .45s forwards; }
+.c-opt.run .arc.a3 { animation: cArc 1s ease-out .7s forwards; }
+.c-opt.run .horizon { animation: cLine 1s cubic-bezier(.6,0,.2,1) .05s forwards; }
+.c-opt.run .sunDot { animation: cDot .6s cubic-bezier(.3,1.6,.5,1) 1.2s forwards; }
+.c-opt.run .wm { animation: cWipe 1s cubic-bezier(.6,0,.2,1) 1.5s forwards; }
+@keyframes cArc { to { stroke-dashoffset: 0; } }
+@keyframes cLine { to { transform: scaleX(1); } }
+@keyframes cDot { to { transform: scale(1); } }
+@keyframes cWipe { to { clip-path: inset(0 0 0 0); } }
+
+@media (prefers-reduced-motion: reduce) { .opt * { animation-duration: .01s !important; animation-delay: 0s !important; } }
+footer { padding: 0 6vw 60px; color: rgba(242,251,247,.5); font-size: 13px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<header>
+  <p class="k">Emerald Hour · Logo &amp; intro options</p>
+  <h1>Three directions, <em>pick one</em></h1>
+  <p class="lead">Each option has a logo and a matching intro. Press Replay to watch an intro again. These are previews only. The live site is unchanged until you choose.</p>
+</header>
+
+<main>
+  <!-- A -->
+  <section class="opt a" data-play>
+    <div class="opt-head">
+      <div>
+        <h2><span>A</span>Developing Frame</h2>
+        <p>A camera frame that clicks into place, with the sun rising inside it. The name develops out of blur like a print in a darkroom.</p>
+      </div>
+      <button class="replay" type="button">Replay</button>
+    </div>
+    <div class="body">
+      <div class="logo-col">
+        <svg viewBox="0 0 120 120" aria-label="Developing frame logo">
+          <defs>
+            <clipPath id="aClip"><rect x="18" y="22" width="84" height="76" rx="12"/></clipPath>
+          </defs>
+          <rect class="frame" x="18" y="22" width="84" height="76" rx="12" fill="none" stroke="#34d399" stroke-width="4"/>
+          <g clip-path="url(#aClip)">
+            <circle class="sun" cx="60" cy="74" r="26" fill="#34d399"/>
+            <rect x="10" y="82" width="100" height="4" fill="#012b1e"/>
+            <rect x="10" y="90" width="100" height="4" fill="#012b1e"/>
+          </g>
+        </svg>
+        <small>Frame + sun</small>
+      </div>
+      <div class="stage">
+        <div class="c">
+          <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+            <rect class="frame" x="18" y="22" width="84" height="76" rx="12" fill="none" stroke="#34d399" stroke-width="4"/>
+            <g clip-path="url(#aClip)">
+              <circle class="sun" cx="60" cy="74" r="26" fill="#34d399"/>
+              <rect x="10" y="82" width="100" height="4" fill="#012b1e"/>
+              <rect x="10" y="90" width="100" height="4" fill="#012b1e"/>
+            </g>
+          </svg>
+          <div class="wm" data-letters>Emerald <em>Hour</em></div>
+          <div class="tag">New York City · Personal Shoots &amp; Events</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section class="opt b" data-play>
+    <div class="opt-head">
+      <div>
+        <h2><span>B</span>Shutter Bloom</h2>
+        <p>A six-blade shutter snaps shut around a glowing emerald sun. A white flash, then the name rises out of the light.</p>
+      </div>
+      <button class="replay" type="button">Replay</button>
+    </div>
+    <div class="body">
+      <div class="logo-col">
+        <svg viewBox="0 0 120 120" aria-label="Shutter bloom logo">
+          <g fill="#34d399" stroke="#012b1e" stroke-width="2.5" stroke-linejoin="round">
+            <polygon points="60,60 60,8 90,25" transform="rotate(0 60 60)"/>
+            <polygon points="60,60 60,8 90,25" transform="rotate(60 60 60)"/>
+            <polygon points="60,60 60,8 90,25" transform="rotate(120 60 60)"/>
+            <polygon points="60,60 60,8 90,25" transform="rotate(180 60 60)"/>
+            <polygon points="60,60 60,8 90,25" transform="rotate(240 60 60)"/>
+            <polygon points="60,60 60,8 90,25" transform="rotate(300 60 60)"/>
+          </g>
+          <circle cx="60" cy="60" r="14" fill="#012b1e"/>
+          <circle cx="60" cy="60" r="8" fill="#34d399"/>
+        </svg>
+        <small>Shutter + sun</small>
+      </div>
+      <div class="stage">
+        <div class="flash"></div>
+        <div class="c">
+          <svg class="blades-wrap" width="140" height="140" viewBox="0 0 120 120" aria-hidden="true">
+            <g class="blades" fill="#34d399" stroke="#012b1e" stroke-width="2.5" stroke-linejoin="round">
+              <polygon points="60,60 60,8 90,25" transform="rotate(0 60 60)"/>
+              <polygon points="60,60 60,8 90,25" transform="rotate(60 60 60)"/>
+              <polygon points="60,60 60,8 90,25" transform="rotate(120 60 60)"/>
+              <polygon points="60,60 60,8 90,25" transform="rotate(180 60 60)"/>
+              <polygon points="60,60 60,8 90,25" transform="rotate(240 60 60)"/>
+              <polygon points="60,60 60,8 90,25" transform="rotate(300 60 60)"/>
+            </g>
+            <circle class="core" cx="60" cy="60" r="14" fill="#012b1e"/>
+            <circle cx="60" cy="60" r="8" fill="#34d399" class="core"/>
+          </svg>
+          <div class="wm" data-letters>Emerald <em>Hour</em></div>
+          <div class="tag">New York City · Personal Shoots &amp; Events</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C -->
+  <section class="opt c-opt" data-play>
+    <div class="opt-head">
+      <div>
+        <h2><span>C</span>Sunset Arcs</h2>
+        <p>Three arcs rise from the horizon like sunset light, a sun drops into place, and the name is revealed in one wipe.</p>
+      </div>
+      <button class="replay" type="button">Replay</button>
+    </div>
+    <div class="body">
+      <div class="logo-col">
+        <svg viewBox="0 0 120 120" aria-label="Sunset arcs logo">
+          <line x1="12" y1="84" x2="108" y2="84" stroke="#6ee7b7" stroke-width="3" stroke-linecap="round"/>
+          <path d="M22 84 A38 38 0 0 1 98 84" fill="none" stroke="#34d399" stroke-width="5" stroke-linecap="round"/>
+          <path d="M34 84 A26 26 0 0 1 86 84" fill="none" stroke="#10b981" stroke-width="5" stroke-linecap="round"/>
+          <path d="M46 84 A14 14 0 0 1 74 84" fill="none" stroke="#6ee7b7" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="60" cy="72" r="5" fill="#fff"/>
+        </svg>
+        <small>Arcs + horizon</small>
+      </div>
+      <div class="stage">
+        <div class="c">
+          <svg width="150" height="100" viewBox="0 0 120 80" aria-hidden="true">
+            <line class="horizon" x1="6" y1="70" x2="114" y2="70" stroke="#6ee7b7" stroke-width="2.5" stroke-linecap="round"/>
+            <path class="arc a1" pathLength="1" d="M18 70 A42 42 0 0 1 102 70" stroke="#34d399" stroke-width="5"/>
+            <path class="arc a2" pathLength="1" d="M30 70 A30 30 0 0 1 90 70" stroke="#10b981" stroke-width="5"/>
+            <path class="arc a3" pathLength="1" d="M42 70 A18 18 0 0 1 78 70" stroke="#6ee7b7" stroke-width="5"/>
+            <circle class="sunDot" cx="60" cy="58" r="5" fill="#fff"/>
+          </svg>
+          <div class="wm" data-letters>Emerald <em>Hour</em></div>
+          <div class="tag">New York City · Personal Shoots &amp; Events</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Options are previews only and are not linked from the site. Choose A, B, or C (or mix them) and I will apply it and keep everything else as it is.
+</footer>
+
+<script>
+  // Split wordmarks into letters for per-letter animation.
+  document.querySelectorAll('[data-letters]').forEach(el => {
+    let i = 0;
+    const walk = node => {
+      [...node.childNodes].forEach(n => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          [...n.textContent].forEach(ch => {
+            const s = document.createElement('span');
+            s.className = 'ch'; s.textContent = ch === ' ' ? '\u00a0' : ch;
+            s.style.setProperty('--i', i++);
+            frag.appendChild(s);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    };
+    walk(el);
+  });
+
+  // Play an option's intro: remove and re-add the class so the animation restarts.
+  const play = sec => { sec.classList.remove('run'); void sec.offsetWidth; sec.classList.add('run'); };
+  document.querySelectorAll('[data-play]').forEach(sec => {
+    sec.querySelector('.replay').addEventListener('click', () => play(sec));
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting && !sec.dataset.played) { sec.dataset.played = '1'; play(sec); }
+    }), { threshold: .35 });
+    io.observe(sec);
+  });
+</script>
+</body>
+</html>
