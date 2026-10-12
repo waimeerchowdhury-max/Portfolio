@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>theapostrophe — photography</title>
+<meta name="description" content="theapostrophe — a photography portfolio of personal shoots, events, studio and street. Every picture ends with ’">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Space+Grotesk:wght@300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="is-intro">
 
+<div class="grain" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"><span class="glyph">’</span></div>
+<div id="cursor-dot" aria-hidden="true"></div>
+
+<!-- ============ INTRO ============ -->
+<div id="intro" aria-hidden="true">
+  <div class="brass-line"></div>
+  <div class="intro-frame">
+    <svg class="apos-draw" viewBox="0 0 120 160" aria-hidden="true">
+      <path class="stroke" pathLength="1" d="M78 10 C96 34 104 58 104 82 C104 118 82 144 46 152 C68 128 78 106 76 84 C56 80 44 64 44 46 C44 26 58 10 78 10 Z"/>
+      <path class="fillable" d="M78 10 C96 34 104 58 104 82 C104 118 82 144 46 152 C68 128 78 106 76 84 C56 80 44 64 44 46 C44 26 58 10 78 10 Z"/>
+    </svg>
+    <h1 class="intro-brand" aria-label="theapostrophe">
+      <span class="w">t</span><span class="w">h</span><span class="w">e</span><span class="w apos-char">’</span><span class="w">a</span><span class="w">p</span><span class="w">o</span><span class="w">s</span><span class="w">t</span><span class="w">r</span><span class="w">o</span><span class="w">p</span><span class="w">h</span><span class="w">e</span>
+    </h1>
+    <div class="intro-tag">photography — personal · events · studio · street</div>
+  </div>
+  <div class="intro-count" id="intro-count">000 %</div>
+  <div class="intro-hint">every picture ends with ’</div>
+  <div class="curtain"></div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header id="nav">
+  <a class="logo" href="#hero" data-scroll>the<em>’</em></a>
+  <ul>
+    <li><a href="#work" data-scroll>work</a></li>
+    <li><a href="#series" data-scroll>series</a></li>
+    <li><a href="#about" data-scroll>about</a></li>
+    <li><a href="#contact" class="contact-chip" data-scroll>contact</a></li>
+  </ul>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section id="hero" style="padding:0">
+    <div id="hero-slides"></div>
+    <h2 class="hero-title" aria-label="theapostrophe">
+      <span class="row"><span>the<span class="apos-char">’</span></span></span>
+      <span class="row"><span>apostrophe</span></span>
+    </h2>
+    <div class="hero-sub">a photography portfolio — new york</div>
+    <div class="slide-dots" id="slide-dots"></div>
+    <div class="hero-meta">
+      <span class="cap-series" id="cap-series"></span>
+      <span class="cap-who" id="cap-who"></span>
+    </div>
+    <div class="scroll-hint"><span class="tick"></span>scroll</div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="marquee-track"></div></div>
+
+  <!-- ============ WORK ============ -->
+  <section id="work">
+    <div class="sec-head">
+      <div data-reveal>
+        <span class="sec-kicker">’01 — the archive</span>
+        <h2 class="sec-title">selected <span class="it">work</span></h2>
+      </div>
+      <p class="sec-note" data-reveal>forty-one frames across seven moods. hover to read the room, click to step inside. filter by series if you’re looking for one face.</p>
+    </div>
+    <div class="chips" id="chips" data-reveal>
+      <button class="on" data-filter="all">all frames</button>
+      <button data-filter="studio">studio</button>
+      <button data-filter="spidy">spider-verse</button>
+      <button data-filter="hasib">analog nights</button>
+      <button data-filter="noir">city noir</button>
+      <button data-filter="park">dusk</button>
+      <button data-filter="stone">stone & light</button>
+      <button data-filter="night">streetlight</button>
+    </div>
+    <div class="work-grid" id="work-grid"></div>
+  </section>
+
+  <!-- ============ SERIES ============ -->
+  <section id="series">
+    <div class="sec-head">
+      <div data-reveal>
+        <span class="sec-kicker">’02 — the chapters</span>
+        <h2 class="sec-title">the <span class="it">series</span></h2>
+      </div>
+      <p class="sec-note" data-reveal>each series is one person, one wardrobe, one light. drag the strips sideways — they read like film.</p>
+    </div>
+    <div id="series-list"></div>
+  </section>
+
+  <!-- ============ PERSONS ============ -->
+  <section id="persons">
+    <div class="sec-head">
+      <div data-reveal>
+        <span class="sec-kicker">’03 — the muses</span>
+        <h2 class="sec-title">in front of <span class="it">the lens</span></h2>
+      </div>
+      <p class="sec-note" data-reveal>five faces, five moods. the last one usually hides behind the camera.</p>
+    </div>
+    <div class="person-grid" id="person-grid"></div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-left" data-reveal>
+        <span class="big-apostrophe">’</span>
+        <span class="sec-kicker">’04 — about</span>
+        <div class="sig">theapostrophe — est. in a pause</div>
+      </div>
+      <div class="about-right">
+        <p data-reveal>Every sentence has a pause before it ends — <em>theapostrophe</em> lives in that pause.</p>
+        <p data-reveal>What began as frames of friends — on seamless paper, on brick, under streetlamps — slowly became a language: light as grammar, shadow as punctuation, the shutter as the only full stop.</p>
+        <p data-reveal>Personal shoots, events, studio days, street nights. Whatever the occasion, the mark stays the same: one honest frame, held a second longer than necessary.</p>
+        <p class="fine" data-reveal>( the full story — in the owner’s own words — arrives here soon. )</p>
+        <div class="about-stats" data-reveal>
+          <div><b>07</b><span>series</span></div>
+          <div><b>41</b><span>frames</span></div>
+          <div><b>05</b><span>muses</span></div>
+          <div><b>’1</b><span>mark</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT (separate box) ============ -->
+  <section id="contact">
+    <div class="contact-box" data-reveal>
+      <div class="kicker">’05 — contact</div>
+      <h2>let’s make something<br>worth <em>framing’</em></h2>
+      <div class="contact-links">
+        <a id="c-email" href="#"><span class="lab">email</span><span class="val"></span></a>
+        <a id="c-ig" href="#" target="_blank" rel="noopener"><span class="lab">instagram</span><span class="val"></span></a>
+        <span id="c-loc"><span class="lab">based in</span><span class="val"></span></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© 2026 the<em>’</em>apostrophe</span>
+  <span>shot on friendship & available light</span>
+  <span>every picture ends with <em>’</em></span>
+</footer>
+
+<!-- ============ LIGHTBOX ============ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="photo viewer">
+  <button class="lb-btn lb-close" id="lb-close">close ×</button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="previous">←</button>
+  <figure>
+    <img id="lb-img" src="" alt="">
+    <figcaption><span class="t" id="lb-title"></span><span id="lb-who"></span><span id="lb-count"></span></figcaption>
+  </figure>
+  <button class="lb-btn lb-next" id="lb-next" aria-label="next">→</button>
+</div>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
