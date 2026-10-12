@@ -1,5 +1,5 @@
 /* ============================================================
-   HALFSECOND — interactions
+   THEAPOSTROPHE — interactions
    ============================================================ */
 (() => {
   'use strict';
@@ -130,7 +130,7 @@
   secs.forEach(s => linkObs.observe(s));
 
   /* ---------- scramble decode ---------- */
-  const glyphs = '█▓▒░<>/\\*+=—EMERALDHOUR';
+  const glyphs = '█▓▒░<>/\\*+=—THEAPOSTROPHE';
   function scramble(el) {
     const final = el.dataset.text;
     if (reduce) { el.textContent = final; return; }
@@ -163,7 +163,7 @@
   /* ---------- statement word reveal ---------- */
   $$('.statement p').forEach(p => {
     const words = p.textContent.trim().split(/\s+/);
-    const hl = ['light', 'emerald', 'white'];
+    const hl = ['light', 'ember', 'white'];
     p.innerHTML = words.map(w =>
       `<span class="w${hl.includes(w.replace(/[^A-Za-z]/g, '').toLowerCase()) ? ' hl' : ''}">${w}</span>`).join(' ');
     const ws = $$('.w', p);

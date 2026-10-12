@@ -1,12 +1,12 @@
-# Halfsecond ✦
+# theapostrophe ✦
 
 The photography portfolio of **Waimeer Chowdhury** — personal shoots, portraits and events, photographed in and around New York City.
 
-**Halfsecond** is a portfolio-first site (no booking flow): an animated, interactive gallery built on an emerald-green & white theme, using the photographs committed at the root of this repository.
+**theapostrophe** is a portfolio-first site (no booking flow): an animated, interactive gallery built on an midnight-blue & ember-orange theme, using the photographs committed at the root of this repository.
 
 ## Highlights
 
-- **Emerald & white theme** with a half-lens logo mark (a solid half and an open ring with a flash spark) (`assets/logo-mark.svg`, favicon `assets/favicon.svg`)
+- **Midnight blue & ember orange theme** with a apostrophe-in-a-lens logo mark (an apostrophe inside a camera lens, with a light point on the ring) (`assets/logo-mark.svg`, favicon `assets/favicon.svg`)
 - **Animated intro** — logo stroke-draw preloader with counter, curtain reveal
 - **Kinetic hero** — masked line reveal, scramble-decode eyebrow, Ken-Burns cross-fading slideshow, marquee band
 - **Interactive gallery** — category filters (Studio / Street & Flash / Concept / Outdoors), masonry layout, hover captions, full lightbox with keyboard + swipe navigation
