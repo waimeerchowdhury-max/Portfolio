@@ -17,7 +17,7 @@
     introTimers.splice(0).forEach(clearTimeout);
     pre.classList.add('open');
     document.body.classList.add('ready');
-    setTimeout(() => pre.remove(), 1200);
+    setTimeout(() => pre.remove(), 1000);
   };
   const at = (fn, ms) => introTimers.push(setTimeout(fn, ms));
   $$('[data-letters]').forEach(el => {
@@ -39,9 +39,9 @@
     finishIntro();
   } else {
     pre.classList.add('s1');                              // lens ring draws
-    at(() => pre.classList.add('s2'), 1100);              // sun rises
-    at(() => pre.classList.add('s3'), 1900);              // wordmark rises
-    at(finishIntro, 3300);                                // lens opens
+    at(() => pre.classList.add('s2'), 500);              // sun rises
+    at(() => pre.classList.add('s3'), 900);              // wordmark rises
+    at(finishIntro, 3400);                                // lens opens
   }
 
   /* ---------- custom cursor ---------- */
@@ -188,32 +188,26 @@
     }, 5200);
   }
 
-  /* ---------- gallery filters ---------- */
+  /* ---------- gallery: series groups, filter tabs, series covers ---------- */
   const tiles = $$('.tile');
+  const groups = $$('.group');
   const filters = $$('.filter');
-  filters.forEach(btn => btn.addEventListener('click', () => {
-    if (btn.classList.contains('active')) return;
-    filters.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const cat = btn.dataset.filter;
-    tiles.forEach((t, i) => {
-      const show = cat === 'all' || t.dataset.cat === cat;
-      if (show) {
-        t.classList.remove('is-hidden');
-        t.classList.add('in');
-        requestAnimationFrame(() => setTimeout(() => t.classList.remove('is-hiding'), 20 + i * 26));
-      } else {
-        t.classList.add('is-hiding');
-        setTimeout(() => t.classList.add('is-hidden'), 400);
-      }
-    });
-  }));
+  const setFilter = (cat) => {
+    filters.forEach(b => b.classList.toggle('active', b.dataset.filter === cat));
+    groups.forEach(g => g.classList.toggle('is-hidden', cat !== 'all' && g.dataset.group !== cat));
+  };
+  filters.forEach(btn => btn.addEventListener('click', () => setFilter(btn.dataset.filter)));
+  $$('[data-go]').forEach(card => {
+    const go = () => { setFilter(card.dataset.go); $('#work').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); };
+    card.addEventListener('click', go);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+  });
 
   /* ---------- lightbox ---------- */
   const lb = $('.lightbox'), lbImg = $('.lb-stage img'),
     lbTitle = $('.lb-bottom h3'), lbMeta = $('.lb-bottom p'), lbCount = $('.lb-count');
   let list = [], li = 0;
-  const visible = () => tiles.filter(t => !t.classList.contains('is-hidden'));
+  const visible = () => tiles.filter(t => !t.closest('.group').classList.contains('is-hidden'));
   function show(i) {
     li = (i + list.length) % list.length;
     const t = list[li];

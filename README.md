@@ -2,14 +2,14 @@
 
 The photography portfolio of **Waimeer Chowdhury** — personal shoots, portraits and events, photographed in and around New York City.
 
-**theapostrophe** is a portfolio-first site (no booking flow): an animated, interactive gallery built on an midnight-blue & ember-orange theme, using the photographs committed at the root of this repository.
+**theapostrophe** is a portfolio-first site (no booking flow): an animated, interactive gallery built on an aubergine & saffron-gold theme, using the photographs committed at the root of this repository.
 
 ## Highlights
 
-- **Midnight blue & ember orange theme** with a apostrophe-in-a-lens logo mark (an apostrophe inside a camera lens, with a light point on the ring) (`assets/logo-mark.svg`, favicon `assets/favicon.svg`)
+- **Aubergine & saffron gold theme** with a apostrophe-in-a-lens logo mark (an apostrophe inside a camera lens, with a light point on the ring) (`assets/logo-mark.svg`, favicon `assets/favicon.svg`)
 - **Animated intro** — logo stroke-draw preloader with counter, curtain reveal
 - **Kinetic hero** — masked line reveal, scramble-decode eyebrow, Ken-Burns cross-fading slideshow, marquee band
-- **Interactive gallery** — category filters (Studio / Street & Flash / Concept / Outdoors), masonry layout, hover captions, full lightbox with keyboard + swipe navigation
+- **Interactive gallery** — series groups (Web-Slinger / Studio / City & Night / Stone & Arches / Parks / Persons) with filter tabs, a compact square grid, hover captions, full lightbox with keyboard + swipe navigation
 - **Series rail** — drag-to-scroll horizontal chapters with 3D tilt cards
 - **Micro-interactions** — custom cursor with "view" state, magnetic buttons, scroll-progress bar, word-by-word statement reveal, animated counters, parallax portrait, film-grain overlay
 - Fully responsive with a circular-clip mobile menu; honours `prefers-reduced-motion`
