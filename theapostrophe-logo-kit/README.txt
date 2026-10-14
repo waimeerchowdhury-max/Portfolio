@@ -23,3 +23,10 @@ The symbol plus the'apostrophe, without Photography or Media Production. Provide
 SMOOTH VECTOR SYMBOL UPDATE
 Replaced the old traced emblem with deliberately drawn cubic curves in ALL logo and icon variants. Updated every PDF, EPS, PNG, JPG and favicon export.
 WATERMARKS: white for dark photos, black for light photos. Transparent full-opacity PNG/SVG and ready-made 35% opacity PNG. Includes compact icon+name and wordmark-only. Adjust opacity to suit each photo.
+
+WEBSITE PALETTE EDITION
+All wordmarks now use #C9A44C for the apostrophe after the, including black/white/ivory versions. Those versions are therefore no longer strictly monochrome.
+website-palette contains every layout family: Photography, Media Production, no tagline, icon, avatar/favicon, full-logo and wordmark-only watermarks. Website versions use gold #C9A44C, warm ivory #F0EAD9 and background #060A09. Full logos have transparent, dark and square variants. Every master uses the smooth redrawn vector symbol. Watermark 35pct PNGs apply 35% opacity to all colors. Other greens and light gold remain supporting website colors, not extra logo colors.
+
+LETTERING CORRECTION
+Both p letters now share identical upright vector geometry. Both o letters use identical smooth circular bowls. Both t outlines and the a counter were redrawn with clean straight segments and smooth cubic curves. Applied to every wordmark export and watermark; gold apostrophe retained.
