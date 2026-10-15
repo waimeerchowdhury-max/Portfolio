@@ -142,13 +142,12 @@ window.SITE_DATA = {
 
   /* ---------- about ---------- */
   about: {
-    lead: "Every sentence has a pause before it ends.",
+    lead: "",
     portrait: { img: "stone-5", pos: "50% 48%" },
     paragraphs: [
-      "the’apostrophe lives in that pause — the half-second before the shutter, when someone forgets they are being photographed and simply becomes themselves.",
-      "It started with friends. A chair on seamless paper, a striped shirt, one red tie. Then a friend in a spider mask on a brick rooftop, and another in leather against downtown glass. Somewhere between the studio days and the street nights, the frames stopped being pictures of people and started being a language: light as grammar, shadow as punctuation, the shutter as the only full stop.",
-      "Portraits, events, studio days, city nights — whatever the occasion, the mark stays the same. One honest frame, held a second longer than necessary. Then the pause, and then the end of the sentence.",
-      "The one usually behind the camera is Waimeer. When he steps in front of it, the frames are shot by Umair — which is why they look the way they do."
+      "Hi, my name is Waimeer Chowdhury an independent photographer based in New York  and this is my working portfolio. I treat photography as my creative outlet and like to take unposed pictures that feel natural and real I focus on personal portraits, studio shoots and events.",
+      "Whether I’m photographing everyday life or exploring a creative portrait, I want each image to feel honest and natural. Additionally setting mood and theme based on clients choice and preference.",
+      "Every session starts with a conversation about ideas, frames and emotion. By setting the target it helps me provide a better result where both sides are comfortable. Whether it is me or my partner (Umair) our aim is to create photographs worth returning to years later bringing back the memories of the moment the picture was taken."
     ],
     signoff: "Waimeer Chowdhury",
     stats: [
