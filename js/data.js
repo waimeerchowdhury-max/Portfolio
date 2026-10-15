@@ -145,7 +145,7 @@ window.SITE_DATA = {
     lead: "",
     portrait: { img: "stone-5", pos: "50% 48%" },
     paragraphs: [
-      "Hi, my name is Waimeer Chowdhury an independent photographer based in New York  and this is my working portfolio. I treat photography as my creative outlet and like to take unposed pictures that feel natural and real I focus on personal portraits, studio shoots and events.",
+      "Hi, my name is Waimeer Chowdhury an independent photographer based in New York  and this is my working portfolio. I treat photography as my creative outlet and like to take unposed pictures that feel natural and real. I focus on personal portraits, studio shoots and events.",
       "Whether I’m photographing everyday life or exploring a creative portrait, I want each image to feel honest and natural. Additionally setting mood and theme based on clients choice and preference.",
       "Every session starts with a conversation about ideas, frames and emotion. By setting the target it helps me provide a better result where both sides are comfortable. Whether it is me or my partner (Umair) our aim is to create photographs worth returning to years later bringing back the memories of the moment the picture was taken."
     ],
