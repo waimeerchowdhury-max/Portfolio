@@ -418,20 +418,24 @@
       }
       var mergeTl = gsap.timeline({
         scrollTrigger: {
-          trigger: heroEl, start: "top top", end: "bottom top", scrub: 0.35, invalidateOnRefresh: true
+          /* A short scrub keeps the motion tied to every scroll frame while
+             filtering abrupt wheel/touch deltas. */
+          trigger: heroEl, start: "top top", end: "bottom top", scrub: 0.08, invalidateOnRefresh: true
         }
       });
+      /* All visual layers begin at progress zero, so the handoff responds on
+         the first scroll movement rather than waiting until the hero is half gone. */
       mergeTl.to(heroMark, {
-        x: function () { return logoMergeMetrics(0.84).x; },
-        y: function () { return logoMergeMetrics(0.84).y; },
-        scale: function () { return logoMergeMetrics(0.84).scale; },
-        transformOrigin: "50% 50%", duration: 0.84, ease: "none"
+        x: function () { return logoMergeMetrics(0.88).x; },
+        y: function () { return logoMergeMetrics(0.88).y; },
+        scale: function () { return logoMergeMetrics(0.88).scale; },
+        transformOrigin: "50% 50%", duration: 0.88, ease: "none"
       }, 0)
-        .to(heroFullLogo, { opacity: 0, duration: 0.28, ease: "none" }, 0.35)
-        .to(heroMark, { opacity: 1, duration: 0.28, ease: "none" }, 0.35)
-        .to(heroMark, { y: function () { return logoMergeMetrics(1).y; }, duration: 0.16, ease: "none" }, 0.84)
-        .to(heroMark, { opacity: 0, duration: 0.16, ease: "none" }, 0.84)
-        .to(navLogo, { opacity: 1, duration: 0.16, ease: "none" }, 0.84);
+        .to(heroFullLogo, { opacity: 0, duration: 0.48, ease: "none" }, 0)
+        .to(heroMark, { opacity: 1, duration: 0.18, ease: "none" }, 0)
+        .to(heroMark, { y: function () { return logoMergeMetrics(1).y; }, duration: 0.12, ease: "none" }, 0.88)
+        .to(heroMark, { opacity: 0, duration: 0.12, ease: "none" }, 0.88)
+        .to(navLogo, { opacity: 1, duration: 0.12, ease: "none" }, 0.88);
     } else if (navLogo) {
       navLogo.style.opacity = 1;
     }
