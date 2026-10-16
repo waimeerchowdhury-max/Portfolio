@@ -115,13 +115,6 @@ window.SITE_DATA = {
     }
   ],
 
-  /* ---------- featured work ---------- */
-  featuredWorks: [
-    { img: "studio-1", series: "studio" },  // 2-Edited.png
-    { img: "noir-2", series: "noir" },      // IMG_3934.jpg
-    { img: "park-1", series: "park" }       // IMG_6538.jpg
-  ],
-
   /* Five hero photographs; no Stone & Light portrait of Waimeer or Analog Nights frame is used here. */
   heroSlides: [
     { img: "studio-2", series: "studio", pos: "50% 34%" },

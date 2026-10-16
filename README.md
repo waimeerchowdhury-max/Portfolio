@@ -10,7 +10,6 @@ repository root; no build step or backend is required.
   apostrophe. The hero has five slides and retains the scroll animation: the
   full lockup fades while a separate white icon moves into the navigation.
   The Analog Nights frame is not in the hero; the Night series remains intact.
-- **Work:** three featured photographs; each opens its complete series.
 - **Series:** all 34 active frames across the same seven chapters.
 - **Muses:** five named subjects and their complete photo reels.
 - **About:** copy remains editable in `js/data.js`.

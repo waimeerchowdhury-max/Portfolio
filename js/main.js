@@ -110,31 +110,6 @@
     $("#slide-dots").appendChild(b);
   });
 
-  /* three featured works — clicking a frame opens its full chapter */
-  (D.featuredWorks || []).forEach(function (f) {
-    var ser = seriesById[f.series];
-    if (!ser) return;
-    var idx = Math.max(0, ser.imgs.indexOf(f.img));
-    var size = SIZES[f.img] || [1200, 1600];
-    var item = document.createElement("button");
-    item.type = "button";
-    item.className = "work-item";
-    item.setAttribute("data-reveal", "");
-    item.setAttribute("data-cursor", "view");
-    item.setAttribute("aria-label", "Open all " + ser.imgs.length + " photographs in " + ser.title);
-    item.innerHTML =
-      '<span class="work-image" data-photo-protected>' +
-        '<img class="protected-photo" src="' + thumb(f.img) + '" srcset="' + photoSrcset(f.img) + '"' +
-        ' sizes="(max-width:680px) 92vw, (max-width:1000px) 45vw, 34vw" width="' + size[0] + '" height="' + size[1] + '"' +
-        ' alt="Selected photograph from ' + ser.title + '" loading="lazy" decoding="async" style="object-position:' +
-        (f.pos || ser.pos || "50% 50%") + '">' +
-      '</span>';
-    item.addEventListener("click", function () {
-      openViewer(reelOf(ser), idx, "reel", ser.title);
-    });
-    $("#work-grid").appendChild(item);
-  });
-
   /* series blocks */
   (D.series || []).forEach(function (s, i) {
     var art = document.createElement("article");
@@ -397,10 +372,10 @@
     if (scrollStarted) return;
     scrollStarted = true;
     var navLogo = $("#nav .brand-logo");
-    if (navLogo) navLogo.style.opacity = 1;
 
     if (reduced || !hasST) {
       $$("[data-reveal]").forEach(function (el) { el.style.opacity = 1; el.style.transform = "none"; });
+      if (navLogo) navLogo.style.opacity = 1;
       return;
     }
 
@@ -416,7 +391,56 @@
       });
     });
 
-    [["hero", "#hero"], ["work", "#work"], ["series", "#series"], ["muses", "#muses"], ["about", "#about"], ["contact", "#contact"]]
+    /* As the hero leaves the viewport, its icon separates from the lockup,
+       travels into the fixed navigation, then hands off to the nav icon. */
+    var heroEl = $("#hero"), heroTitle = $("#hero .hero-title");
+    var heroMark = $("#hero .hero-mark"), heroFullLogo = $("#hero .hero-full-logo");
+    var navEl = $("#nav");
+    if (heroEl && heroTitle && heroMark && heroFullLogo && navEl && navLogo) {
+      gsap.set(navLogo, { opacity: 0 });
+      function logoMergeMetrics(progress) {
+        var heroRect = heroEl.getBoundingClientRect();
+        var navRect = navLogo.getBoundingClientRect();
+        var navX = parseFloat(gsap.getProperty(navEl, "x")) || 0;
+        var navY = parseFloat(gsap.getProperty(navEl, "y")) || 0;
+        var width = heroMark.offsetWidth || 1;
+        var height = heroMark.offsetHeight || 1;
+        var scale = navRect.width / width;
+        var startX = heroRect.left + heroTitle.offsetLeft + heroMark.offsetLeft;
+        var startY = heroRect.top + (window.scrollY || document.documentElement.scrollTop || 0) +
+          heroTitle.offsetTop + heroMark.offsetTop;
+        var travel = heroEl.offsetHeight * progress;
+        return {
+          x: navRect.left - navX - (startX + (1 - scale) * width / 2),
+          y: navRect.top - navY - (startY - travel + (1 - scale) * height / 2),
+          scale: scale
+        };
+      }
+      var mergeTl = gsap.timeline({
+        scrollTrigger: {
+          /* A short scrub keeps the motion tied to every scroll frame while
+             filtering abrupt wheel/touch deltas. */
+          trigger: heroEl, start: "top top", end: "bottom top", scrub: 0.08, invalidateOnRefresh: true
+        }
+      });
+      /* All visual layers begin at progress zero, so the handoff responds on
+         the first scroll movement rather than waiting until the hero is half gone. */
+      mergeTl.to(heroMark, {
+        x: function () { return logoMergeMetrics(0.88).x; },
+        y: function () { return logoMergeMetrics(0.88).y; },
+        scale: function () { return logoMergeMetrics(0.88).scale; },
+        transformOrigin: "50% 50%", duration: 0.88, ease: "none"
+      }, 0)
+        .to(heroFullLogo, { opacity: 0, duration: 0.48, ease: "none" }, 0)
+        .to(heroMark, { opacity: 1, duration: 0.18, ease: "none" }, 0)
+        .to(heroMark, { y: function () { return logoMergeMetrics(1).y; }, duration: 0.12, ease: "none" }, 0.88)
+        .to(heroMark, { opacity: 0, duration: 0.12, ease: "none" }, 0.88)
+        .to(navLogo, { opacity: 1, duration: 0.12, ease: "none" }, 0.88);
+    } else if (navLogo) {
+      navLogo.style.opacity = 1;
+    }
+
+    [["hero", "#hero"], ["series", "#series"], ["muses", "#muses"], ["about", "#about"], ["contact", "#contact"]]
       .forEach(function (pair) {
         var sec = $(pair[1]);
         if (!sec) return;
