@@ -155,7 +155,8 @@ body.c-hide #cursor,body.c-hide #cursor-ring{opacity:0}
 #intro .intro-full-logo{display:block;width:100%;height:100%;object-fit:contain}
 #hero .hero-full-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;will-change:opacity}
 #hero .hero-mark{
-  position:absolute;left:33%;top:-1.2%;width:33.3%;height:auto;opacity:0;display:none
+  position:absolute;left:33%;top:-1.2%;width:33.3%;height:auto;opacity:0;
+  will-change:transform,opacity
 }
 #intro .intro-hint{
   position:absolute;left:50%;bottom:clamp(20px,4vh,34px);transform:translateX(-50%);
@@ -283,36 +284,8 @@ section{position:relative;padding:clamp(58px,7.5vh,92px) var(--pad)}
 .sec-title .it{font-style:italic;color:var(--brass)}
 [data-reveal]{opacity:0}
 
-/* ---------- 07a · selected work ---------- */
-#work{background:linear-gradient(180deg,var(--ink),#08110e 54%,var(--ink));overflow:hidden}
-.work-grid{
-  display:grid;grid-template-columns:1.02fr .9fr 1.08fr;align-items:start;
-  gap:clamp(14px,2.4vw,34px);max-width:1500px;margin:0 auto
-}
-.work-item{
-  display:block;width:100%;padding:0;border:0;background:none;text-align:left;min-width:0;
-  color:var(--bone);position:relative;overflow:visible
-}
-.work-item:nth-child(2){margin-top:clamp(38px,7vh,92px)}
-.work-image{
-  display:block;position:relative;aspect-ratio:4/5;overflow:hidden;isolation:isolate;
-  background:var(--coal);border:1px solid var(--line);transition:border-color var(--fade)
-}
-.work-item:nth-child(2) .work-image{aspect-ratio:3/4}
-.work-item:nth-child(3) .work-image{aspect-ratio:4/5}
-.work-image img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  filter:none;transform:none
-}
-.work-image::after{
-  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(to top,rgba(6,10,9,.78),transparent 44%),linear-gradient(135deg,rgba(28,107,82,.11),transparent 46%);
-  transition:opacity var(--fade)
-}
-.work-item:hover .work-image{border-color:var(--line-brass)}
-.work-item:focus-visible .work-image{outline:1px solid var(--brass);outline-offset:5px}
+/* ---------- 07 · series ---------- */
 
-/* ---------- 07b · series ---------- */
 #series{background:var(--coal);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .series-block{
   display:grid;grid-template-columns:minmax(230px,340px) 1fr;gap:clamp(20px,3vw,48px);
@@ -576,15 +549,9 @@ body.focus-mode #hero .scroll-hint{opacity:0!important}
 /* ---------- responsive ---------- */
 @media (max-width:1000px){
   #muses .person-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .work-grid{gap:14px}
 }
 @media (max-width:680px){
   #muses .person-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-  .work-grid{grid-template-columns:1fr;gap:26px}
-  .work-item:nth-child(2),.work-item:nth-child(3){margin-top:0}
-  .work-image,.work-item:nth-child(2) .work-image,.work-item:nth-child(3) .work-image{aspect-ratio:4/5;max-height:72svh}
-  .work-item:nth-child(2){width:88%;margin-left:auto}
-  .work-item:nth-child(3){width:92%}
 }
 @media (max-width:420px){
   #muses .person-grid{grid-template-columns:1fr}
