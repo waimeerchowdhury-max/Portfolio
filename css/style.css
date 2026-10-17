@@ -315,6 +315,14 @@ section{position:relative;padding:clamp(58px,7.5vh,92px) var(--pad)}
   display:flex;gap:13px;overflow-x:auto;padding:2px 2px 14px;
   scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;
   user-select:none;-webkit-user-select:none;cursor:grab;
+  overscroll-behavior-x:contain;
+}
+/* Phones/tablets: the browser owns the horizontal pan, so the gesture runs on
+   the compositor with native momentum instead of fighting the scripted drag.
+   Cards still come to rest aligned, exactly like the desktop snap. */
+@media (hover:none),(pointer:coarse){
+  .strip{scroll-snap-type:x mandatory;scroll-padding-left:2px}
+  .strip figure{scroll-snap-align:start}
 }
 .strip img{-webkit-user-drag:none;user-select:none}
 .strip::-webkit-scrollbar{display:none}

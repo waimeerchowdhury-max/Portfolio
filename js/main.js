@@ -206,7 +206,34 @@
   var C = D.contact || {};
   var emailLink = $("#c-email");
   $(".val", emailLink).textContent = C.email;
-  emailLink.href = "mailto:" + C.email;
+  $("#c-mail").href = "mailto:" + C.email;
+  /* desktop (mouse): clicking the email copies the address instead of opening mail */
+  emailLink.addEventListener("click", function (e) {
+    if (!fine) return;
+    e.preventDefault();
+    var hint = $(".hint", emailLink);
+    var done = function () {
+      hint.textContent = "copied ’";
+      clearTimeout(emailLink._t);
+      emailLink._t = setTimeout(function () { hint.textContent = "send an email ’"; }, 1600);
+    };
+    var fallback = function () {
+      var ta = document.createElement("textarea");
+      ta.value = C.email;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); done(); } catch (err) {}
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(C.email).then(done, fallback);
+    } else {
+      fallback();
+    }
+  });
   $("#c-ig .val").textContent = C.instagram;
   $("#c-ig").href = C.instagramUrl || "https://www.instagram.com/" + String(C.instagram).replace(/^@/, "");
   $("#c-loc .val").textContent = C.location;
@@ -444,8 +471,16 @@
       .forEach(function (pair) {
         var sec = $(pair[1]);
         if (!sec) return;
+        /* The last section can never scroll its top up to 45% on shorter screens
+           (the footer sits below it), so it activates at the page bottom instead. */
+        var isLast = pair[0] === "contact";
         ScrollTrigger.create({
-          trigger: sec, start: "top 45%", end: "bottom 45%",
+          trigger: sec,
+          start: isLast ? function () {
+            var top = sec.getBoundingClientRect().top + scrollY - innerHeight * 0.45;
+            return Math.max(0, Math.min(top, ScrollTrigger.maxScroll(window) - 2));
+          } : "top 45%",
+          end: isLast ? "max" : "bottom 45%",
           onToggle: function (self) {
             if (!self.isActive) return;
             $$("#markers button").forEach(function (b) { b.classList.toggle("on", b.dataset.goto === pair[0]); });
@@ -471,33 +506,65 @@
     if (nav) nav.classList.toggle("solid", y > 60);
   }, { passive: true });
 
-  /* strips: drag with momentum, snap, progress */
+  /* strips: drag with momentum, snap, progress
+     Touch and pen pan natively (see the .strip snap rules in style.css), so the
+     gesture is driven by exactly one scroller instead of the browser and this
+     script pulling against each other — that fight was the mobile jitter.
+     Geometry is measured once per gesture/resize/frame-load rather than read
+     back on every event, and each move is applied once per animation frame. */
   $$("[data-strip]").forEach(function (strip) {
     var track = $(".strip-track i", strip.parentNode);
     var wrap = strip.parentNode;
     var countEl = $(".pg-count b", wrap);
     var down = false, sx = 0, sl = 0, lx = 0, lt = 0, vel = 0, moved = 0, mom = null;
     var figs = $$("figure", strip);
+    var frame = 0, pending = 0, card = -1, touchX = 0, rt = null;
+    /* cached geometry: refreshed on init, resize, frame load, gesture start */
+    var lefts = [], maxScroll = 0, barSpan = 0;
 
-    /* which card is closest to the left edge right now */
-    function nearest() {
+    function clamp(x) { return Math.max(0, Math.min(maxScroll, x)); }
+    function setBar(x) {
+      if (!track) return;
+      var at = x === undefined ? strip.scrollLeft : x;
+      track.style.left = (maxScroll > 0 ? clamp(at) / maxScroll : 0) * barSpan + "%";
+    }
+    function measure() {
+      lefts = figs.map(function (f) { return f.offsetLeft - 2; });
+      maxScroll = Math.max(0, strip.scrollWidth - strip.clientWidth);
+      var w = strip.scrollWidth ? Math.max(12, (strip.clientWidth / strip.scrollWidth) * 100) : 100;
+      barSpan = 100 - w;
+      if (track) track.style.width = w + "%";
+      setBar();
+    }
+    /* which card is closest to a scroll offset (defaults to the current one) */
+    function nearest(x) {
+      var at = x === undefined ? strip.scrollLeft : x;
       var i = 0, bd = Infinity;
-      figs.forEach(function (f, k) {
-        var d = Math.abs(f.offsetLeft - strip.scrollLeft - 2);
+      for (var k = 0; k < lefts.length; k++) {
+        var d = Math.abs(lefts[k] - at);
         if (d < bd) { bd = d; i = k; }
-      });
+      }
       return i;
+    }
+    function paint(x) {
+      var i = nearest(x);
+      if (i === card) return;
+      card = i;
+      if (countEl) countEl.textContent = pad(i + 1);
+    }
+    function glide(target, dur, ease) {
+      if (mom) { mom.kill(); mom = null; }
+      if (!hasGSAP) { strip.scrollLeft = target; paint(target); return; }
+      mom = gsap.to(strip, {
+        scrollLeft: target, duration: dur, ease: ease, overwrite: true,
+        onComplete: function () { mom = null; paint(); }
+      });
     }
     function goCard(i) {
       i = Math.max(0, Math.min(figs.length - 1, i));
       if (!figs[i]) return;
-      var left = figs[i].offsetLeft - 2;
-      if (hasGSAP) gsap.to(strip, { scrollLeft: left, duration: FADE_DUR, ease: FADE_EASE });
-      else strip.scrollLeft = left;
-    }
-    function paint() {
-      var i = nearest();
-      if (countEl) countEl.textContent = pad(i + 1);
+      if (!lefts.length) measure();
+      glide(clamp(lefts[i]), FADE_DUR, FADE_EASE);
     }
     var pager = $(".pager", wrap);
     if (pager) {
@@ -509,56 +576,80 @@
       if (e.key === "ArrowRight") { e.preventDefault(); e.stopPropagation(); goCard(nearest() + 1); }
       if (e.key === "ArrowLeft") { e.preventDefault(); e.stopPropagation(); goCard(nearest() - 1); }
     });
-    function setBar() {
-      if (!track) return;
-      var w = strip.scrollWidth ? Math.max(12, (strip.clientWidth / strip.scrollWidth) * 100) : 100;
-      var max = strip.scrollWidth - strip.clientWidth;
-      var ratio = max > 0 ? strip.scrollLeft / max : 0;
-      track.style.width = w + "%";
-      track.style.left = ratio * (100 - w) + "%";
-    }
-    strip.addEventListener("scroll", function () { setBar(); paint(); }, { passive: true });
-    setTimeout(function () { setBar(); paint(); }, 80);
-    setTimeout(function () { setBar(); paint(); }, 900);
+    strip.addEventListener("scroll", function () {
+      var x = strip.scrollLeft;
+      setBar(x); paint(x);
+    }, { passive: true });
+    /* lazy frames landing change the card offsets, so re-measure then */
+    strip.addEventListener("load", measure, true);
+    addEventListener("resize", function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { measure(); paint(); }, 140);
+    });
+    setTimeout(function () { measure(); paint(); }, 80);
+    setTimeout(function () { measure(); paint(); }, 900);
 
+    /* touch / pen: native pan owns the gesture; we only watch it so a flick
+       does not open the viewer and so no leftover tween fights the finger */
+    strip.addEventListener("touchstart", function (e) {
+      moved = 0; vel = 0;
+      touchX = e.touches && e.touches.length ? e.touches[0].clientX : 0;
+      if (mom) { mom.kill(); mom = null; }
+      measure();
+    }, { passive: true });
+    strip.addEventListener("touchmove", function (e) {
+      if (moved || !e.touches || !e.touches.length) return;
+      if (Math.abs(e.touches[0].clientX - touchX) > 8) moved = 1;
+    }, { passive: true });
+
+    /* mouse / trackpad: scripted drag, batched to one write per frame */
     strip.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      if (mom) { mom.kill(); mom = null; }
+      measure();
       down = true; moved = 0; vel = 0;
       sx = e.clientX; sl = strip.scrollLeft; lx = e.clientX; lt = performance.now();
-      if (mom) { mom.kill(); mom = null; }
     });
+    function dragFrame() {
+      frame = 0;
+      strip.scrollLeft = sl - pending;
+    }
     strip.addEventListener("pointermove", function (e) {
-      if (!down) return;
+      if (!down || e.pointerType !== "mouse") return;
       var d = e.clientX - sx;
-      if (Math.abs(d) > 5 && !moved) {
+      if (!moved) {
+        if (Math.abs(d) <= 5) return;
         moved = 1;
         if (strip.setPointerCapture) { try { strip.setPointerCapture(e.pointerId); } catch (err) { } }
       }
-      strip.scrollLeft = sl - d;
-      var t = performance.now();
-      if (t - lt > 12) { vel = (e.clientX - lx) / (t - lt); lx = e.clientX; lt = t; }
+      pending = d;
+      if (!frame) frame = requestAnimationFrame(dragFrame);
+      var t = performance.now(), dt = t - lt;
+      if (dt >= 8) {
+        /* eased so one spiky sample does not decide the flick */
+        vel += ((e.clientX - lx) / dt - vel) * 0.6;
+        lx = e.clientX; lt = t;
+      }
     });
-    function snap() {
-      if (!figs.length) return;
-      var best = nearest();
-      var left = figs[best].offsetLeft - 2;
-      if (hasGSAP) gsap.to(strip, { scrollLeft: left, duration: FADE_DUR, ease: FADE_EASE, onUpdate: paint });
-      else strip.scrollLeft = left;
-      paint();
-    }
-    function release() {
+    function release(cancelled) {
       if (!down) return;
       down = false;
-      if (hasGSAP && Math.abs(vel) > 0.25) {
-        var o = { x: strip.scrollLeft };
-        mom = gsap.to(o, {
-          x: strip.scrollLeft - vel * 220, duration: FADE_DUR, ease: FADE_EASE,
-          onUpdate: function () { strip.scrollLeft = o.x; },
-          onComplete: snap
-        });
-      } else snap();
+      if (frame) { cancelAnimationFrame(frame); frame = 0; dragFrame(); }
+      if (!moved || !lefts.length) return;
+      var from = strip.scrollLeft;
+      var flick = !cancelled && Math.abs(vel) > 0.25;
+      var target = clamp(lefts[nearest(flick ? clamp(from - vel * 220) : from)]);
+      vel = 0;
+      if (Math.abs(target - from) <= 0.5) { strip.scrollLeft = target; paint(target); return; }
+      /* momentum and snap are one continuous deceleration: no second kick */
+      glide(
+        target,
+        flick ? Math.max(FADE_DUR, Math.min(0.85, Math.abs(target - from) / 1500 + 0.18)) : FADE_DUR,
+        flick ? "power3.out" : FADE_EASE
+      );
     }
-    strip.addEventListener("pointerup", release);
-    strip.addEventListener("pointercancel", release);
+    strip.addEventListener("pointerup", function () { release(false); });
+    strip.addEventListener("pointercancel", function () { release(true); });
     strip.addEventListener("click", function (e) {
       var f = e.target.closest("figure");
       if (!f || moved) return;
@@ -700,10 +791,17 @@
   });
   (function swipe() {
     var stage = $(".v-stage"), sx = 0, sy = 0, dn = false;
-    stage.addEventListener("pointerdown", function (e) { dn = true; sx = e.clientX; sy = e.clientY; });
+    function hold(on) {
+      /* keep an autoplay advance from landing in the middle of a swipe */
+      if (!V.pb) return;
+      if (on) V.pb.pause(); else V.pb.resume();
+    }
+    stage.addEventListener("pointerdown", function (e) { dn = true; sx = e.clientX; sy = e.clientY; hold(true); });
+    stage.addEventListener("pointercancel", function () { if (!dn) return; dn = false; hold(false); });
     stage.addEventListener("pointerup", function (e) {
       if (!dn) return;
       dn = false;
+      hold(false);
       var dx = e.clientX - sx, dy = e.clientY - sy;
       if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) vStep(dx < 0 ? 1 : -1);
     });
@@ -751,19 +849,24 @@
     });
   }
 
-  /* hero swipe */
+  /* hero swipe — a slide never changes while a finger is still on the glass,
+     so the autoplay cannot swap frames mid-gesture and read as a stutter */
+  var heroDrag = false;
   (function heroSwipe() {
     var heroEl = $("#hero"), sx = 0, sy = 0, dn = false;
-    heroEl.addEventListener("pointerdown", function (e) {
-      if (e.target.closest("button")) return;
-      dn = true; sx = e.clientX; sy = e.clientY;
-    });
-    heroEl.addEventListener("pointerup", function (e) {
+    function end(e) {
       if (!dn) return;
-      dn = false;
+      dn = false; heroDrag = false;
+      if (e.type === "pointercancel") return;
       var dx = e.clientX - sx, dy = e.clientY - sy;
       if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) heroShow(heroCur + (dx < 0 ? 1 : -1), true);
+    }
+    heroEl.addEventListener("pointerdown", function (e) {
+      if (e.target.closest("button")) return;
+      dn = true; heroDrag = true; sx = e.clientX; sy = e.clientY;
     });
+    addEventListener("pointerup", end);
+    addEventListener("pointercancel", end);
   })();
 
   /* focus mode — hide every piece of chrome, leave only the pictures */
@@ -820,7 +923,12 @@
     if (heroTimer) clearTimeout(heroTimer);
     heroTimer = setTimeout(nextSlide, HOLD + 400);
   }
-  function nextSlide() { if (!V.open) heroShow(heroCur + 1); }
+  function nextSlide() {
+    if (V.open) return;
+    /* a drag in progress wins: hold the advance until the finger lifts */
+    if (heroDrag) { heroTimer = setTimeout(nextSlide, 320); return; }
+    heroShow(heroCur + 1);
+  }
 
   $("#hero-open").addEventListener("click", function () {
     var s = D.heroSlides[heroCur], ser = seriesById[s.series];
