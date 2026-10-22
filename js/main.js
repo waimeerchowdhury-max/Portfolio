@@ -97,7 +97,7 @@
     var hs = SIZES[s.img] || [1600, 1067];
     d.setAttribute("data-photo-protected", "");
     d.innerHTML = '<img class="protected-photo" width="' + hs[0] + '" height="' + hs[1] + '" src="' + heroSrc(s.img) +
-      '" srcset="' + photoSrcset(s.img) + '" sizes="100vw" alt="' + (ser.title || "") + " — " + ownerOf(ser, s.img) + '"' +
+      '" srcset="' + photoSrcset(s.img) + '" sizes="100vw" alt="' + (ser.title || "") + " — " + ownerOf(ser, s.img) + " photographed in New York by The Apostrophe Media" + '"' +
       ' loading="eager" decoding="async" fetchpriority="' + (i === 0 ? "high" : "low") + '" style="object-position:' + (s.pos || "50% 50%") + '">';
     $("#hero-slides").appendChild(d);
   });
@@ -129,7 +129,7 @@
           return '<figure data-photo-protected data-full="' + id + '" data-series="' + s.id + '" data-cursor="drag" role="listitem">' +
             '<img class="protected-photo" src="' + thumb(id) + '" srcset="' + photoSrcset(id) + '"' +
             ' sizes="(max-width:620px) 100vw, 50vw" width="' + frameSize[0] + '" height="' + frameSize[1] + '"' +
-            ' alt="' + s.title + " — frame " + (k + 1) + '" loading="lazy" decoding="async">' +
+            ' alt="' + s.title + " — " + ownerOf(s, id) + ", New York portrait photography, frame " + (k + 1) + " of " + s.imgs.length + '" loading="lazy" decoding="async">' +
             '<span class="fnum">' + pad(k + 1) + " / " + pad(s.imgs.length) + "</span></figure>";
         }).join("") +
       '</div><div class="strip-track"><i></i></div>' +
@@ -155,7 +155,7 @@
         '<img class="person-full protected-photo" width="' + sz[0] + '" height="' + sz[1] + '"' +
         ' src="' + thumb(p.img) + '" srcset="' + photoSrcset(p.img) + '"' +
         ' sizes="(max-width:420px) 100vw, (max-width:680px) 48vw, (max-width:1000px) 32vw, 20vw"' +
-        ' alt="' + p.name + ' — full portrait" loading="lazy" decoding="async">' +
+        ' alt="' + p.name + ' — portrait in New York by The Apostrophe Media" loading="lazy" decoding="async">' +
       '</span>' +
       '<span class="pc-name"><b>' + p.name + '</b></span>';
     c.addEventListener("click", function () { openReel(frames, p.name + " — every frame"); });
@@ -195,7 +195,7 @@
       pimg.setAttribute("srcset", photoSrcset(A.portrait.img));
       pimg.setAttribute("sizes", "(max-width:860px) 80vw, 360px");
       pimg.src = thumb(A.portrait.img);
-      pimg.alt = D.brand && D.brand.owner ? D.brand.owner + " — portrait" : "Photographer portrait";
+      pimg.alt = "Waimeer Chowdhury, photographer and founder of The Apostrophe Media, New York City";
     }
   }
   $("#about-stats").innerHTML = (A.stats || []).map(function (s) {
@@ -467,7 +467,7 @@
       navLogo.style.opacity = 1;
     }
 
-    [["hero", "#hero"], ["series", "#series"], ["muses", "#muses"], ["about", "#about"], ["contact", "#contact"]]
+    [["hero", "#hero"], ["services", "#services"], ["series", "#series"], ["muses", "#muses"], ["about", "#about"], ["contact", "#contact"]]
       .forEach(function (pair) {
         var sec = $(pair[1]);
         if (!sec) return;

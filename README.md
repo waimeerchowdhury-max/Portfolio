@@ -13,6 +13,11 @@ repository root; no build step or backend is required.
 - **Series:** all 34 active frames across the same seven chapters.
 - **Muses:** five named subjects and their complete photo reels.
 - **About:** copy remains editable in `js/data.js`.
+- **Services:** a static `#services` section lists portrait sessions, studio
+  sessions, event coverage, and street/creative work, plus a three-step booking
+  process. It is plain HTML so crawlers that do not run JavaScript still read it.
+- **FAQ:** a static `#faq` section answers the six questions that mirror the
+  `FAQPage` structured data.
 - **Contact:** `contact@theapostrophe.media` opens a mail link; Instagram links
   to `@theapostrophemedia`.
 - **Footer:** uses the white wordmark watermark PNG.
@@ -48,6 +53,25 @@ python3 scripts/generate_watermarked.py
 
 The script requires Node.js and ImageMagick (`convert` and `identify`); it reads
 `js/data.js` and `js/sizes.js` and does not modify source uploads.
+
+## Search and AI visibility
+
+Search and AI answer engines are handled by files at the repository root:
+
+- `index.html` — title, meta description, and a JSON-LD `@graph` holding
+  `LocalBusiness` / `PhotographyBusiness`, `Person` (Waimeer Chowdhury and
+  Umair), `WebSite`, `WebPage`, and `FAQPage` nodes.
+- `robots.txt` — allows all crawlers, with explicit allowances for Google,
+  Bing, GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Applebot, and CCBot.
+- `sitemap.xml` — the single canonical URL.
+- `llms.txt` — a plain-language summary of the business for AI tools that read
+  it (Google does not require or read this file).
+
+The Services and FAQ copy lives directly in `index.html`, not in `js/data.js`,
+so it is present in the raw HTML. If you change a question or answer, update the
+`FAQPage` node in the JSON-LD at the same time. Open `SEO.md` for the off-site
+steps (Google Business Profile, Search Console, listings) that decide whether
+Google describes the business correctly.
 
 ## Editing and local preview
 
