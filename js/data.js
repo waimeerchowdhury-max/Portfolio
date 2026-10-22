@@ -135,13 +135,14 @@ window.SITE_DATA = {
 
   /* ---------- about ---------- */
   about: {
-    lead: "",
+    lead: "New York portraits, studio days, events, and street frames — photographed by Waimeer Chowdhury.",
     portrait: { img: "stone-5", pos: "50% 48%" },
     paragraphs: [
-      "Hi, my name is Waimeer Chowdhury an independent photographer based in New York and this is my working portfolio.",
+      "The Apostrophe Media is a New York City photography studio and the working portfolio of Waimeer Chowdhury, an independent photographer based in New York.",
       "I treat photography as my creative outlet and like to take unposed pictures that feel natural and real. I focus on personal portraits, studio shoots and events.",
       "Whether I’m photographing everyday life or exploring a creative portrait, I want each image to feel honest and natural. Additionally setting mood and theme based on clients choice and preference.",
-      "Every session starts with a conversation about ideas, frames and emotion. By setting the target it helps me provide a better result where both sides are comfortable. Whether it is me or my partner (Umair) our aim is to create photographs worth returning to years later bringing back the memories of the moment the picture was taken."
+      "Every session starts with a conversation about ideas, frames and emotion. By setting the target it helps me provide a better result where both sides are comfortable. Whether it is me or my partner (Umair) our aim is to create photographs worth returning to years later bringing back the memories of the moment the picture was taken.",
+      "Portrait, studio, and event sessions are booked across New York City and the surrounding area — email contact@theapostrophe.media with a date, a place, or just a mood worth chasing."
     ],
     signoff: "Waimeer Chowdhury",
     stats: [
