@@ -154,7 +154,7 @@ window.SITE_DATA = {
 
   /* ---------- contact ---------- */
   contact: {
-    email: "team.theapostrophe@gmail.com",
+    email: "contact@theapostrophe.media",
     instagram: "@theapostrophemedia",
     instagramUrl: "https://www.instagram.com/theapostrophemedia",
     location: "New York, NY"

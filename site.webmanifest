@@ -1,0 +1,18 @@
+{
+  "name": "The Apostrophe Media",
+  "short_name": "The Apostrophe",
+  "description": "New York portrait, event, studio, and street photography by Waimeer Chowdhury.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#060a09",
+  "theme_color": "#070b0a",
+  "icons": [
+    {
+      "src": "/theapostrophe-logo-kit/social-avatar.png",
+      "sizes": "1080x1080",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
