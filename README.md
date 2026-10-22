@@ -13,7 +13,7 @@ repository root; no build step or backend is required.
 - **Series:** all 34 active frames across the same seven chapters.
 - **Muses:** five named subjects and their complete photo reels.
 - **About:** copy remains editable in `js/data.js`.
-- **Contact:** `team.theapostrophe@gmail.com` opens a mail link; Instagram links
+- **Contact:** `contact@theapostrophe.media` opens a mail link; Instagram links
   to `@theapostrophemedia`.
 - **Footer:** uses the white wordmark watermark PNG.
 
